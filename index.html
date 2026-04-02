@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raj Jaiswal — Applied Machine Learning &amp; Product Analytics</title>
+  <meta name="description"
+    content="Product Analytics and Applied ML engineer. I build retention, forecasting, and revenue systems using ML + analytics. Open to internship and full-time opportunities.">
+  <meta name="keywords"
+    content="product analytics, applied machine learning, ML engineer, data analytics, A/B testing, forecasting">
+  <meta name="author" content="Raj Jaiswal">
+  <meta property="og:title" content="Raj Jaiswal — Product Analytics &amp; Applied ML">
+  <meta property="og:description"
+    content="I help teams improve retention, forecasting, and revenue using ML + analytics systems.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0E1116">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">raj<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#philosophy">Approach</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://github.com/rajc6h6" target="_blank" rel="noopener" class="nav-cta">GitHub</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero section" id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge fade-in">
+            <span class="dot"></span>
+            Available · Product Analytics / Applied ML · Remote
+          </div>
+          <h1 class="hero-name fade-in fade-in-delay-1">Raj Jaiswal</h1>
+          <p class="hero-headline fade-in fade-in-delay-2">I improve retention, forecasting, and product decisions using ML&nbsp;+&nbsp;analytics.</p>
+          <p class="hero-subtext fade-in fade-in-delay-3">End-to-end ML systems — from raw data to dashboards to decisions. Built like production analytics workflows.</p>
+          <div class="hero-ctas fade-in fade-in-delay-4">
+            <a href="#projects" class="btn-primary">
+              See Case Studies
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17l9.2-9.2M17 17V7H7" />
+              </svg>
+            </a>
+            <a href="https://github.com/rajc6h6" target="_blank" rel="noopener" class="btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- KPI cards move below intro text on same side — stacked under CTA -->
+        <div class="hero-visual fade-in fade-in-delay-2">
+          <div class="kpi-grid">
+            <div class="kpi-card kpi-card--primary">
+              <div class="kpi-label">Churn AUC</div>
+              <div class="kpi-value accent" data-target="0.84" data-prefix="">0.84</div>
+              <div class="kpi-change positive">↑ from 0.71 · Telecom 50K users</div>
+              <div class="kpi-sparkline">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span>
+              </div>
+            </div>
+            <div class="kpi-card kpi-card--primary">
+              <div class="kpi-label">Forecast MAPE</div>
+              <div class="kpi-value warning" data-target="8.3" data-suffix="%">8.3%</div>
+              <div class="kpi-change positive">↓ from 14.1% · Retail sales</div>
+              <div class="kpi-sparkline">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span>
+              </div>
+            </div>
+            <div class="kpi-card kpi-card--secondary">
+              <div class="kpi-label">Conversion Lift</div>
+              <div class="kpi-value success" data-target="+18%">+18%</div>
+              <div class="kpi-change positive">↑ A/B test · Checkout flow</div>
+            </div>
+            <div class="kpi-card kpi-card--secondary">
+              <div class="kpi-label">Systems Built</div>
+              <div class="kpi-value" style="color: var(--accent-light);" data-target="4">4</div>
+              <div class="kpi-change positive">End-to-end · Production-style</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE ========== -->
+  <section class="experience section" id="experience">
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">Real Work</span>
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">Delivered analytics and ML systems in real contexts — freelance, open source, and production-style builds.</p>
+      </div>
+
+      <div class="experience-grid">
+
+        <div class="exp-card fade-in fade-in-delay-1">
+          <div class="exp-header">
+            <div class="exp-icon">📈</div>
+            <div>
+              <div class="exp-role">Freelance Analytics</div>
+              <div class="exp-org">Client Projects · 2024–Present</div>
+            </div>
+          </div>
+          <ul class="exp-list">
+            <li>Delivered analytics workflows and dashboards</li>
+            <li>Automated reporting (significant time reduction)</li>
+            <li>Built decision-support systems</li>
+          </ul>
+        </div>
+
+        <div class="exp-card fade-in fade-in-delay-2">
+          <div class="exp-header">
+            <div class="exp-icon">🗄️</div>
+            <div>
+              <div class="exp-role">Data Systems</div>
+              <div class="exp-org">Portfolio Projects · 2024</div>
+            </div>
+          </div>
+          <ul class="exp-list">
+            <li>Built ELT pipelines and KPI dashboards</li>
+            <li>Designed metrics for business tracking</li>
+            <li>Implemented churn detection logic</li>
+          </ul>
+        </div>
+
+        <div class="exp-card fade-in fade-in-delay-3">
+          <div class="exp-header">
+            <div class="exp-icon">🌐</div>
+            <div>
+              <div class="exp-role">Open Source</div>
+              <div class="exp-org">KolibriOS · Rust · 2024</div>
+            </div>
+          </div>
+          <ul class="exp-list">
+            <li>Contributing to OS kernel (KolibriOS, Rust)</li>
+            <li>Working with a global async team</li>
+            <li>Experience in production-level systems</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== APPROACH ========== -->
+  <section class="philosophy section" id="philosophy">
+    <div class="container">
+      <div class="philosophy-header fade-in">
+        <span class="section-label">Approach</span>
+        <h2 class="section-title">How I work</h2>
+      </div>
+
+      <div class="philosophy-statement fade-in">
+        <p style="font-size: 20px; line-height: 1.5; font-weight: 600;">
+          <span class="muted">ML is only useful if it leads to decisions.</span><br>
+          <span class="highlight">I build end-to-end systems that can be measured — not one-off models in a notebook.</span>
+        </p>
+      </div>
+
+      <div class="principles-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="principle-card fade-in fade-in-delay-1">
+          <div class="principle-icon">⚡</div>
+          <p class="principle-text">ML is only useful if it changes a decision</p>
+          <p class="principle-subtext">If the model doesn't lead to an action, it's a report — not a system</p>
+        </div>
+        <div class="principle-card fade-in fade-in-delay-2">
+          <div class="principle-icon">🔧</div>
+          <p class="principle-text">Systems &gt; one-off analysis</p>
+          <p class="principle-subtext">Reproducible pipelines beat ad-hoc notebooks every time</p>
+        </div>
+        <div class="principle-card fade-in fade-in-delay-3">
+          <div class="principle-icon">🎯</div>
+          <p class="principle-text">Ship simple, measure impact</p>
+          <p class="principle-subtext">A simple model in production beats a complex one in a notebook</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS ========== -->
+  <section class="projects section" id="projects">
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">Case Studies</span>
+        <h2 class="section-title">Systems I built.<br>Decisions they enabled.</h2>
+        <p class="section-subtitle">Problem → system → metric → business decision.</p>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card fade-in fade-in-delay-1" id="project-churn">
+          <div class="project-preview">
+            <img src="images/dashboard-churn.png"
+              alt="Churn prediction ML dashboard showing risk scores and feature importance" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Churn System for Retention Ops</h3>
+            <p class="project-impact">Built on 50K-row telecom data — AUC 0.71 → 0.84.<br>A real-world predictive workflow for retention targeting.</p>
+            <div class="project-tags">
+              <span class="project-tag">XGBoost</span>
+              <span class="project-tag">SMOTE</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Feature Eng.</span>
+              <span class="project-tag">Looker Studio</span>
+            </div>
+            <a href="case-churn.html" class="project-link">
+              View Case Study
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <span class="project-hook">→ See full pipeline + decisions</span>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card fade-in fade-in-delay-2" id="project-forecast">
+          <div class="project-preview">
+            <img src="images/dashboard-forecast.png"
+              alt="Sales forecasting dashboard with time-series predictions and MAPE metrics" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Sales Forecasting for Inventory</h3>
+            <p class="project-impact">Reduced MAPE 14.1% → 8.3% using ARIMA + Prophet.<br>Production-style pipeline simulating retail planning decisions.</p>
+            <div class="project-tags">
+              <span class="project-tag">ARIMA</span>
+              <span class="project-tag">Prophet</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Time-Series</span>
+              <span class="project-tag">SQL</span>
+            </div>
+            <a href="case-forecast.html" class="project-link">
+              View Case Study
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <span class="project-hook">→ See full pipeline + decisions</span>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card fade-in fade-in-delay-3" id="project-synlitics">
+          <div class="project-preview">
+            <img src="images/dashboard-restaurant.png"
+              alt="Synlitics restaurant analytics SaaS dashboard with KPI metrics and trends" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Restaurant Analytics SaaS Pipeline</h3>
+            <p class="project-impact">Automated ELT pipeline processing daily performance metrics.<br>Surfaces revenue trends and menu margins for operational decisions.</p>
+            <div class="project-tags">
+              <span class="project-tag">Supabase</span>
+              <span class="project-tag">PostgreSQL</span>
+              <span class="project-tag">n8n</span>
+              <span class="project-tag">Power BI</span>
+              <span class="project-tag">ETL</span>
+            </div>
+            <a href="case-synlitics.html" class="project-link">
+              View Case Study
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <span class="project-hook">→ See full pipeline + decisions</span>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card fade-in fade-in-delay-4" id="project-abtesting">
+          <div class="project-preview">
+            <img src="images/dashboard-abtesting.png"
+              alt="A/B testing framework dashboard showing experiment results and statistical significance"
+              loading="lazy">
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">A/B Testing Framework for Checkout</h3>
+            <p class="project-impact">Reusable experiment engine with significance tracking.<br>Confirmed +18% conversion lift representing a real-world product change.</p>
+            <div class="project-tags">
+              <span class="project-tag">A/B Testing</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Hypothesis Testing</span>
+              <span class="project-tag">SQL</span>
+            </div>
+            <a href="case-experimentation.html" class="project-link">
+              View Case Study
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <span class="project-hook">→ See full pipeline + decisions</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+  <section class="skills section" id="skills">
+    <div class="container">
+      <div class="fade-in">
+        <span class="section-label">Capabilities</span>
+        <h2 class="section-title">What I can do for your team</h2>
+        <p class="section-subtitle">Grouped by how I use them. Strong focus on learning fast and applying concepts to real datasets.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-category fade-in fade-in-delay-1">
+          <h3 class="skill-category-title">
+            <span class="icon">🎯</span>
+            Decision Systems
+          </h3>
+          <ul class="skill-list">
+            <li>A/B Testing — experiment design &amp; analysis</li>
+            <li>SQL — cohort, funnel &amp; retention analysis</li>
+            <li>Metric Design — defining KPIs that drive action</li>
+            <li>Statistical Inference — hypothesis testing</li>
+            <li>Cohort &amp; Funnel Analysis</li>
+          </ul>
+        </div>
+
+        <div class="skill-category fade-in fade-in-delay-2">
+          <h3 class="skill-category-title">
+            <span class="icon">🧠</span>
+            ML Systems
+          </h3>
+          <ul class="skill-list">
+            <li>XGBoost — classification &amp; ranking</li>
+            <li>ARIMA / Prophet — time-series forecasting</li>
+            <li>Feature Engineering — domain-specific signals</li>
+            <li>SMOTE — handling imbalanced datasets</li>
+            <li>Model Evaluation — AUC, precision/recall, MAPE</li>
+          </ul>
+        </div>
+
+        <div class="skill-category fade-in fade-in-delay-3">
+          <h3 class="skill-category-title">
+            <span class="icon">⚙️</span>
+            Data Pipelines
+          </h3>
+          <ul class="skill-list">
+            <li>Python — modeling &amp; automation</li>
+            <li>ETL / ELT — automated data pipelines</li>
+            <li>PostgreSQL / Supabase — data storage</li>
+            <li>REST APIs — data ingestion &amp; webhooks</li>
+            <li>n8n — workflow automation</li>
+          </ul>
+        </div>
+
+        <div class="skill-category fade-in fade-in-delay-4">
+          <h3 class="skill-category-title">
+            <span class="icon">📊</span>
+            Dashboards &amp; Reporting
+          </h3>
+          <ul class="skill-list">
+            <li>Power BI</li>
+            <li>Looker Studio</li>
+            <li>Matplotlib / Seaborn</li>
+            <li>Automated Reporting</li>
+            <li>Stakeholder Communication</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="cta-card fade-in">
+        <span class="section-label">Let's Talk</span>
+        <h2 class="section-title">Available for Product Analytics&nbsp;/ Applied ML internships<br><span class="cta-highlight">Remote · Summer 2026</span></h2>
+        <p class="section-subtitle">Systems-oriented and ready to contribute from day one.</p>
+        <div class="contact-links">
+          <a href="mailto:raj_j@ar.iitr.ac.in" class="btn-primary" style="font-size: 15px; padding: 16px 32px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            Get in Touch
+          </a>
+          <a href="https://github.com/rajc6h6" target="_blank" rel="noopener" class="btn-secondary"
+            style="padding: 16px 32px;">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/raj-jaiswal-analyst" target="_blank" rel="noopener" class="btn-secondary"
+            style="padding: 16px 32px;">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Raj Jaiswal. Built with precision.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

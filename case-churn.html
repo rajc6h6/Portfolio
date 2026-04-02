@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML-Powered Customer Churn System — Raj Jaiswal</title>
+  <meta name="description" content="Case study: Built an ML-powered churn prediction system improving AUC from 0.71 to 0.84 and enabling targeted retention decisions.">
+  <meta name="theme-color" content="#0B0B0C">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">raj<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#philosophy">Approach</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Case Study Hero -->
+  <section class="case-study-hero">
+    <div class="container">
+      <a href="index.html#projects" class="case-back fade-in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Projects
+      </a>
+      <h1 class="case-title fade-in fade-in-delay-1">ML-Powered Customer Churn Prediction System</h1>
+      <p class="case-outcome fade-in fade-in-delay-2">Built ML-powered churn prediction system improving AUC from 0.71 → 0.84 and enabling retention decisions</p>
+      <div class="case-meta fade-in fade-in-delay-3">
+        <div class="case-meta-item">
+          <span class="label">Type</span>
+          <span class="value">Classification · ML System</span>
+        </div>
+        <div class="case-meta-item">
+          <span class="label">Stack</span>
+          <span class="value">Python · XGBoost · SMOTE · Looker Studio</span>
+        </div>
+        <div class="case-meta-item">
+          <span class="label">Impact</span>
+          <span class="value">AUC 0.84 · Top-decile lift 22%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Content -->
+  <div class="case-content">
+    <div class="container">
+
+      <!-- 1. Problem -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">01 — Problem</span>
+        <h2 class="case-section-title">Product Context</h2>
+        <p class="case-text">
+          The company was experiencing <strong>rising customer churn</strong> with no system to identify at-risk users before they left.
+          Retention campaigns were applied broadly — wasting budget on low-risk users while missing the highest-risk segments entirely.
+          <br><br>
+          The business needed a <strong>predictive system</strong> that could identify churn-prone users early and enable targeted, cost-effective interventions
+          rather than blanket campaigns.
+        </p>
+      </div>
+
+      <!-- 2. Data & Architecture -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">02 — System Architecture</span>
+        <h2 class="case-section-title">Data & Pipeline Design</h2>
+        <p class="case-text">
+          Built an end-to-end pipeline from raw transactional and behavioral data sources to a prediction layer
+          that feeds directly into the retention workflow.
+        </p>
+        <div class="case-architecture">
+          <div class="arch-flow">
+            <div class="arch-node">CRM Data<br><small style="color:var(--text-secondary)">User profiles</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Transaction Logs<br><small style="color:var(--text-secondary)">Behavioral signals</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">Feature Engineering<br><small>Python / pandas</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">XGBoost Model<br><small>Prediction layer</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Risk Scores<br><small style="color:var(--text-secondary)">Per-user output</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Looker Studio<br><small style="color:var(--text-secondary)">Dashboard</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Modeling Approach -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">03 — Modeling</span>
+        <h2 class="case-section-title">Modeling Approach</h2>
+        <p class="case-text">
+          The core challenge was <strong>severe class imbalance</strong> — churned users represented less than 12% of the dataset.
+          A naive model would achieve high accuracy by simply predicting "no churn" for everyone.
+        </p>
+        <div class="model-details">
+          <div class="model-detail-item">
+            <span class="model-detail-label">Algorithm</span>
+            <span class="model-detail-value">XGBoost classifier with hyperparameter tuning via cross-validated grid search</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Imbalance Fix</span>
+            <span class="model-detail-value">SMOTE (Synthetic Minority Oversampling) applied during training to balance class representation</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Features</span>
+            <span class="model-detail-value">Engineered 30+ behavioral features: recency, frequency, monetary (RFM), session patterns, support ticket frequency, feature adoption velocity</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Optimization</span>
+            <span class="model-detail-value">Optimized for recall in high-risk segments — better to flag a false positive than miss a true churner</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Evaluation</span>
+            <span class="model-detail-value">AUC-ROC, precision-recall curves, decile analysis, feature importance (SHAP values)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Dashboard / Output -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">04 — Output Layer</span>
+        <h2 class="case-section-title">Dashboard & Visualization</h2>
+        <p class="case-text">
+          The model outputs feed into a <strong>Looker Studio dashboard</strong> providing the retention team with actionable views:
+          risk distribution heatmaps, segment breakdowns, and per-user churn probability scores with contributing factors.
+        </p>
+        <div class="case-dashboard" style="padding: 40px; background: var(--bg-card);">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Total Users Scored</div>
+              <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--text-primary);">12,847</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">High Risk (>0.7)</div>
+              <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--danger);">1,284</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Retention Savings</div>
+              <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--success);">$124K</div>
+            </div>
+          </div>
+          <!-- Simulated chart area -->
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+            <div style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">Churn Risk Distribution by Decile</div>
+            <div style="display: flex; align-items: flex-end; gap: 8px; height: 120px;">
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 15%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D1</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 20%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D2</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 25%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D3</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 30%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D4</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 40%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D5</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 50%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D6</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent); border-radius: 4px 4px 0 0; height: 60%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D7</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent-light); border-radius: 4px 4px 0 0; height: 72%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D8</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--accent-light); border-radius: 4px 4px 0 0; height: 85%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);">D9</span>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="width:100%; background: var(--danger); border-radius: 4px 4px 0 0; height: 100%;"></div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-primary);">D10</span>
+              </div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; color: var(--text-secondary); text-align: center;">
+              ↑ Top decile (D10) captures 22% of all churners — primary target for retention campaigns
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Insights -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">05 — Insights</span>
+        <h2 class="case-section-title">Key Findings</h2>
+        <ul class="insights-list">
+          <li>High-risk churn users concentrated in users with <strong>declining login frequency over 30 days</strong> combined with reduced feature adoption</li>
+          <li>Users who submitted 2+ support tickets in their first month had <strong>3.2× higher churn probability</strong></li>
+          <li>The <strong>top 3 predictive features</strong> were: days since last login, session-to-purchase ratio, and support ticket count</li>
+          <li>Segment analysis revealed that <strong>mid-tier subscription users</strong> (not the cheapest or most expensive) had the highest churn rate</li>
+        </ul>
+      </div>
+
+      <!-- 6. Decision Layer -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">06 — Decision Layer</span>
+        <h2 class="case-section-title">How insights drove action</h2>
+        <p class="case-text">
+          The model's risk scores were integrated into the retention team's workflow.
+          Instead of applying blanket campaigns, the team <strong>focused retention efforts on the top 10% highest-risk users</strong>,
+          delivering personalized outreach based on the top contributing factors identified by SHAP analysis.
+          <br><br>
+          This shifted the approach from reactive (post-churn surveys) to <strong>proactive, prediction-driven retention</strong>.
+          High-risk users identified in decile 10 received priority onboarding support and personalized feature guidance.
+        </p>
+      </div>
+
+      <!-- 7. Business Impact -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">07 — Impact</span>
+        <h2 class="case-section-title">Business Impact</h2>
+        <div class="impact-grid">
+          <div class="impact-card">
+            <div class="impact-label">AUC Improvement</div>
+            <div class="impact-value">0.71 → 0.84</div>
+            <div class="impact-detail">+18% predictive power</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Top-Decile Lift</div>
+            <div class="impact-value">22%</div>
+            <div class="impact-detail">Churn capture rate</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Intervention Cost</div>
+            <div class="impact-value">↓ 40%</div>
+            <div class="impact-detail">Targeted vs. blanket campaigns</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Learnings -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">08 — Learnings</span>
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="learning-block">
+          "The biggest lesson wasn't about model accuracy — it was about making predictions actionable.
+          A model that scores every user means nothing if the retention team can't act on it.
+          The real work was designing the output layer: clear risk tiers, interpretable reasons, and integration
+          into existing workflows. The best ML system is one the business actually uses."
+        </div>
+      </div>
+
+      <!-- Case Nav -->
+      <div class="case-nav fade-in">
+        <div></div>
+        <a href="case-forecast.html" class="case-nav-link next">
+          <div class="case-nav-label">Next Project →</div>
+          <div class="case-nav-title">Sales Forecasting Engine</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Raj Jaiswal. Built with precision.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
