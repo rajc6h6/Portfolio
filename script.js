@@ -165,4 +165,29 @@ document.addEventListener('DOMContentLoaded', () => {
       heroVisual.style.transform = 'translate(0, 0)';
     });
   }
+
+  // --- Mobile Carousel Highlight on Slide ---
+  if (window.innerWidth <= 768) {
+    const carouselCards = document.querySelectorAll('.exp-card, .project-card, .principle-card, .skill-category, .impact-card');
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px -10% 0px -10%', // focus on the center
+      threshold: 0.55 // card is mostly in view
+    };
+    
+    const carouselObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('mobile-hover');
+        } else {
+          entry.target.classList.remove('mobile-hover');
+        }
+      });
+    }, observerOptions);
+
+    carouselCards.forEach(card => {
+      carouselObserver.observe(card);
+    });
+  }
 });
