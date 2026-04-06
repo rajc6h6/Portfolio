@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Forecasting Engine — Raj Jaiswal</title>
+  <meta name="description" content="Case study: Built a time-series ML forecasting engine reducing MAPE from 14.1% to 8.3%, enabling accurate resource allocation.">
+  <meta name="theme-color" content="#0B0B0C">
+  <link rel="stylesheet" href="styles-optimized.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Performance Optimizations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  </head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">raj<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#philosophy">Approach</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Case Study Hero -->
+  <section class="case-study-hero">
+    <div class="container">
+      <a href="index.html#projects" class="case-back fade-in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Projects
+      </a>
+      <h1 class="case-title fade-in fade-in-delay-1">Sales Forecasting Engine<br>(Time-Series ML)</h1>
+      <p class="case-outcome fade-in fade-in-delay-2">Reduced forecasting error (MAPE) from 14.1% → 8.3%, enabling accurate resource allocation and inventory planning</p>
+      <div class="case-meta fade-in fade-in-delay-3">
+        <div class="case-meta-item">
+          <span class="label">Type</span>
+          <span class="value">Time-Series · Forecasting</span>
+        </div>
+        <div class="case-meta-item">
+          <span class="label">Stack</span>
+          <span class="value">Python · ARIMA · Prophet · SQL</span>
+        </div>
+        <div class="case-meta-item">
+          <span class="label">Impact</span>
+          <span class="value">MAPE 8.3% · Accurate planning</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Content -->
+  <div class="case-content">
+    <div class="container">
+
+      <!-- 1. Problem -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">01 — Problem</span>
+        <h2 class="case-section-title">Product Context</h2>
+        <p class="case-text">
+          The business relied on <strong>manual sales forecasts</strong> based on historical averages and intuition.
+          These forecasts had a Mean Absolute Percentage Error (MAPE) of 14.1%, leading to chronic issues:
+          <br><br>
+          <strong>Over-forecasting</strong> caused excess inventory and wasted resources.
+          <strong>Under-forecasting</strong> led to stockouts and missed revenue.
+          The operations team needed reliable, automated forecasts across multiple product lines and regions
+          to enable proactive planning rather than reactive adjustments.
+        </p>
+      </div>
+
+      <!-- 2. Architecture -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">02 — System Architecture</span>
+        <h2 class="case-section-title">Data & Pipeline Design</h2>
+        <p class="case-text">
+          Designed a modular forecasting pipeline that ingests historical sales data, applies preprocessing
+          and feature extraction, and produces forecasts at daily/weekly/monthly granularity.
+        </p>
+        <div class="case-architecture">
+          <div class="arch-flow">
+            <div class="arch-node">Sales Database<br><small style="color:var(--text-secondary)">PostgreSQL</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">ETL Pipeline<br><small style="color:var(--text-secondary)">Cleaning + aggregation</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">Feature Extraction<br><small>Temporal features</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">ARIMA / Prophet<br><small>Ensemble forecast</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Forecast Output<br><small style="color:var(--text-secondary)">Time-series predictions</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Dashboard<br><small style="color:var(--text-secondary)">Looker Studio</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Modeling -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">03 — Modeling</span>
+        <h2 class="case-section-title">Modeling Approach</h2>
+        <p class="case-text">
+          Evaluated multiple time-series models and built an <strong>ensemble approach</strong> combining
+          statistical methods (ARIMA/SARIMA) with Facebook Prophet for capturing trend, seasonality, and holiday effects.
+        </p>
+        <div class="model-details">
+          <div class="model-detail-item">
+            <span class="model-detail-label">Models</span>
+            <span class="model-detail-value">ARIMA/SARIMA for stationary series, Prophet for series with strong seasonality and holiday effects, weighted ensemble for final forecast</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Challenges</span>
+            <span class="model-detail-value">Multiple seasonalities (weekly, monthly, quarterly), holiday spikes, trend changes during promotions, missing data gaps</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Features</span>
+            <span class="model-detail-value">Day-of-week, month, quarter, lagged values (7/14/30 day), rolling averages, holiday indicators, promotion flags</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Optimization</span>
+            <span class="model-detail-value">Minimized MAPE across forecast horizons (7-day, 30-day), with backtesting on 12-month rolling window</span>
+          </div>
+          <div class="model-detail-item">
+            <span class="model-detail-label">Validation</span>
+            <span class="model-detail-value">Walk-forward validation, residual analysis, prediction interval calibration (80% and 95%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Dashboard -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">04 — Output Layer</span>
+        <h2 class="case-section-title">Forecast Dashboard</h2>
+        <p class="case-text">
+          The forecast outputs are visualized in a <strong>Looker Studio dashboard</strong> showing actual vs. predicted trends,
+          forecast confidence intervals, and error tracking by product line and region.
+        </p>
+        <div class="case-dashboard" style="padding: 40px; background: var(--bg-card);">
+          <!-- Simulated forecast viz -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Current MAPE</div>
+              <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--success);">8.3%</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Previous MAPE</div>
+              <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--danger);">14.1%</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Improvement</div>
+              <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--accent-light);">41%</div>
+            </div>
+          </div>
+          <!-- Simulated line chart -->
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+            <div style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">Actual vs. Forecast (30-Day Window)</div>
+            <svg viewBox="0 0 600 150" style="width: 100%; height: auto;">
+              <!-- Confidence band -->
+              <polygon points="50,110 100,95 150,85 200,75 250,80 300,65 350,55 400,50 450,45 500,40 550,35 550,55 500,60 450,65 400,70 350,75 300,85 250,100 200,95 150,105 100,115 50,130" fill="rgba(79,70,229,0.1)" stroke="none"/>
+              <!-- Actual line -->
+              <polyline points="50,118 100,102 150,93 200,82 250,88 300,72 350,62 400,58 450,52 500,48 550,42" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="4,4"/>
+              <!-- Forecast line -->
+              <polyline points="50,120 100,105 150,95 200,85 250,90 300,75 350,65 400,60 450,55 500,50 550,45" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+              <!-- Labels -->
+              <text x="50" y="145" fill="var(--text-secondary)" font-size="9" font-family="JetBrains Mono">W1</text>
+              <text x="175" y="145" fill="var(--text-secondary)" font-size="9" font-family="JetBrains Mono">W2</text>
+              <text x="300" y="145" fill="var(--text-secondary)" font-size="9" font-family="JetBrains Mono">W3</text>
+              <text x="425" y="145" fill="var(--text-secondary)" font-size="9" font-family="JetBrains Mono">W4</text>
+              <text x="550" y="145" fill="var(--text-secondary)" font-size="9" font-family="JetBrains Mono">W5</text>
+            </svg>
+            <div style="display: flex; gap: 20px; margin-top: 12px; justify-content: center;">
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);">
+                <span style="width:16px; height:2px; background: var(--accent); display:inline-block;"></span> Forecast
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);">
+                <span style="width:16px; height:2px; background: var(--text-secondary); display:inline-block; border-top:2px dashed var(--text-secondary);"></span> Actual
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);">
+                <span style="width:12px; height:8px; background: rgba(79,70,229,0.15); display:inline-block; border-radius: 2px;"></span> 80% CI
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Decision Dashboard -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">05 — Decision Dashboard</span>
+        <h2 class="case-section-title">Interactive Dashboard</h2>
+        <p class="case-text">
+          This dashboard provides a clear view of revenue, costs, and profit trends over time. It supports financial decision-making by highlighting performance changes, category breakdowns, and geographic distribution.
+        </p>
+        <div class="case-dashboard-preview">
+          <picture>
+      <source type="image/webp" srcset="images/optimized/dashboard_thumbnail_contrast-mobile.webp 640w, images/optimized/dashboard_thumbnail_contrast-tablet.webp 768w, images/optimized/dashboard_thumbnail_contrast-desktop-sm.webp 1024w, images/optimized/dashboard_thumbnail_contrast.webp 1280w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
+      <img src="images/optimized/dashboard_thumbnail_contrast-optimized.png" 
+           alt="Finance Dashboard Preview" 
+           class="dashboard-image"
+           loading="lazy"
+           width="1200" 
+           height="675"
+           decoding="async" />
+    </picture>
+        </div>
+        <div style="margin-top: 20px;">
+          <a href="https://lookerstudio.google.com/s/vn0II8EHG2U" target="_blank" class="btn-primary">
+            View Interactive Dashboard →
+          </a>
+        </div>
+      </div>
+
+      <!-- 6. Insights -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">06 — Insights</span>
+        <h2 class="case-section-title">Key Findings</h2>
+        <ul class="insights-list">
+          <li><strong>Weekly seasonality</strong> was the strongest signal — Monday/Tuesday consistently under-indexed while Thursday/Friday peaked</li>
+          <li>Prophet's holiday component captured <strong>promotion-driven spikes</strong> that ARIMA alone couldn't model</li>
+          <li>The ensemble approach reduced error most in <strong>volatile product lines</strong> where single models diverged significantly</li>
+          <li>Forecast accuracy degraded beyond 14 days — operational planning was redesigned around <strong>7-day rolling forecasts</strong></li>
+        </ul>
+      </div>
+
+      <!-- 7. Decision Layer -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">07 — Decision Layer</span>
+        <h2 class="case-section-title">How forecasts drove action</h2>
+        <p class="case-text">
+          The forecasting engine became the <strong>input layer for operations planning</strong>.
+          Inventory was pre-positioned based on 7-day rolling forecasts. Staff scheduling aligned with predicted demand peaks.
+          Marketing promotions were timed around forecast valleys to smooth demand curves.
+          <br><br>
+          The key shift: from <strong>"what happened last month"</strong> to <strong>"what will happen this week"</strong> as the basis for resource decisions.
+        </p>
+      </div>
+
+      <!-- 8. Impact -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">08 — Impact</span>
+        <h2 class="case-section-title">Business Impact</h2>
+        <div class="impact-grid">
+          <div class="impact-card">
+            <div class="impact-label">MAPE Reduction</div>
+            <div class="impact-value">14.1% → 8.3%</div>
+            <div class="impact-detail">41% improvement in accuracy</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Planning Horizon</div>
+            <div class="impact-value">7-day</div>
+            <div class="impact-detail">Rolling automated forecasts</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Overstock Reduction</div>
+            <div class="impact-value">↓ 23%</div>
+            <div class="impact-detail">Less wasted inventory</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Learnings -->
+      <div class="case-section fade-in">
+        <span class="case-section-label">09 — Learnings</span>
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="learning-block">
+          "The most impactful decision wasn't choosing between ARIMA and Prophet — it was deciding the forecast horizon.
+          We initially built for 30-day forecasts, but accuracy dropped sharply past 14 days.
+          By shifting to 7-day rolling forecasts aligned with the business cadence, we delivered dramatically
+          more useful predictions. The lesson: match the model's capability to the decision it supports."
+        </div>
+      </div>
+
+      <!-- Case Nav -->
+      <div class="case-nav fade-in">
+        <a href="case-churn.html" class="case-nav-link">
+          <div class="case-nav-label">← Previous</div>
+          <div class="case-nav-title">ML-Powered Churn System</div>
+        </a>
+        <a href="case-synlitics.html" class="case-nav-link next">
+          <div class="case-nav-label">Next Project →</div>
+          <div class="case-nav-title">Synlitics — Restaurant Analytics SaaS</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Raj Jaiswal. Built with precision.</p>
+    </div>
+  </footer>
+
+  <script src="script-optimized.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experimentation & A/B Testing Framework — Raj Jaiswal</title>
+  <meta name="description" content="Built an experimentation framework enabling data-driven product decisions using statistical testing.">
+  <meta name="theme-color" content="#0B0B0C">
+  <link rel="stylesheet" href="styles-optimized.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Performance Optimizations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  </head>
+<body>
+  <nav class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">raj<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#philosophy">Approach</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="case-study-hero">
+    <div class="container">
+      <a href="index.html#projects" class="case-back fade-in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Projects
+      </a>
+      <h1 class="case-title fade-in fade-in-delay-1">Experimentation & A/B Testing Framework</h1>
+      <p class="case-outcome fade-in fade-in-delay-2">Enabled data-driven product decisions using statistical testing, reducing guesswork and decision latency</p>
+      <div class="case-meta fade-in fade-in-delay-3">
+        <div class="case-meta-item"><span class="label">Type</span><span class="value">Experimentation · Statistics</span></div>
+        <div class="case-meta-item"><span class="label">Stack</span><span class="value">Python · SQL · Hypothesis Testing</span></div>
+        <div class="case-meta-item"><span class="label">Impact</span><span class="value">Rigorous decision framework</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-content">
+    <div class="container">
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">01 — Problem</span>
+        <h2 class="case-section-title">Product Context</h2>
+        <p class="case-text">Product decisions were being made based on <strong>intuition and anecdotal feedback</strong> rather than rigorous testing. Feature launches had no measurement framework — teams couldn't answer "did this change actually improve the metric?" with statistical confidence. The organization needed a systematic approach to <strong>test, measure, and validate</strong> product changes before full rollout.</p>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">02 — System Architecture</span>
+        <h2 class="case-section-title">Framework Design</h2>
+        <p class="case-text">Built a reusable experimentation framework covering the full lifecycle: hypothesis formation, sample size calculation, traffic splitting, metric tracking, and statistical analysis.</p>
+        <div class="case-architecture">
+          <div class="arch-flow">
+            <div class="arch-node">Hypothesis<br><small style="color:var(--text-secondary)">Define metric + MDE</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">Sample Size Calc<br><small>Power analysis</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Traffic Split<br><small style="color:var(--text-secondary)">Control / Variant</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">Data Collection<br><small>SQL pipelines</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">Statistical Tests<br><small>Python analysis</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Decision<br><small style="color:var(--text-secondary)">Ship / Kill / Iterate</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">03 — Methodology</span>
+        <h2 class="case-section-title">Statistical Approach</h2>
+        <p class="case-text">The framework implements rigorous statistical testing to ensure reliable decisions — avoiding both false positives (shipping bad changes) and false negatives (killing good ones).</p>
+        <div class="model-details">
+          <div class="model-detail-item"><span class="model-detail-label">Test Types</span><span class="model-detail-value">Two-sample t-tests for continuous metrics, chi-squared tests for proportions, Mann-Whitney U for non-parametric distributions</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Power Analysis</span><span class="model-detail-value">Pre-experiment sample size calculation: α=0.05, β=0.80, minimum detectable effect (MDE) defined per experiment</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Guard Rails</span><span class="model-detail-value">Multiple comparison corrections (Bonferroni), sequential testing boundaries, SRM (sample ratio mismatch) checks</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Metrics</span><span class="model-detail-value">Primary metric (decision metric), secondary metrics (understanding), and guardrail metrics (safety check)</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Reporting</span><span class="model-detail-value">Automated analysis pipeline: p-values, confidence intervals, effect sizes, and plain-language recommendations</span></div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">04 — Output Layer</span>
+        <h2 class="case-section-title">Experiment Results Dashboard</h2>
+        <p class="case-text">Each experiment generates a structured analysis report with clear statistical conclusions and actionable recommendations.</p>
+        <div class="case-dashboard" style="padding: 40px; background: var(--bg-card);">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Control CTR</div>
+              <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--text-secondary);">3.2%</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Variant CTR</div>
+              <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--success);">4.1%</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">p-value</div>
+              <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--accent-light);">0.003</div>
+            </div>
+          </div>
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align:center;">
+            <div style="font-family: var(--font-mono); font-size: 13px; color: var(--success); font-weight: 600;">✓ STATISTICALLY SIGNIFICANT — Recommend shipping variant</div>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 6px;">95% CI for lift: [+18.2%, +34.6%] · n=24,500 per group · Duration: 14 days</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">05 — Insights</span>
+        <h2 class="case-section-title">Key Findings</h2>
+        <ul class="insights-list">
+          <li><strong>60% of "obvious improvements"</strong> showed no statistically significant effect — validating the need for testing</li>
+          <li>Sample ratio mismatches detected in 2 experiments revealed <strong>implementation bugs</strong> before wrong conclusions were drawn</li>
+          <li>Sequential testing reduced average experiment duration by <strong>30%</strong> for clear winners/losers</li>
+          <li>Guardrail metrics caught 1 experiment that improved CTR but <strong>degraded retention</strong> — would have been shipped without them</li>
+        </ul>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">06 — Decision Layer</span>
+        <h2 class="case-section-title">How experiments drove decisions</h2>
+        <p class="case-text">The framework established a <strong>culture of evidence-based decision making</strong>. Instead of debating opinions in meetings, teams could say "let's test it." Every product change above a threshold now requires an experiment. The result: faster shipping (no long debates), better outcomes (statistical backing), and fewer rollbacks (bad changes caught in testing).</p>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">07 — Impact</span>
+        <h2 class="case-section-title">Business Impact</h2>
+        <div class="impact-grid">
+          <div class="impact-card"><div class="impact-label">Decision Quality</div><div class="impact-value">↑ Rigorous</div><div class="impact-detail">Statistical confidence</div></div>
+          <div class="impact-card"><div class="impact-label">Bad Ships Prevented</div><div class="impact-value">3+</div><div class="impact-detail">Caught by guardrails</div></div>
+          <div class="impact-card"><div class="impact-label">Decision Latency</div><div class="impact-value">↓ 40%</div><div class="impact-detail">Test vs. debate</div></div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">08 — Learnings</span>
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="learning-block">"The biggest win wasn't any single experiment — it was changing how the team thinks about decisions. Once people experienced the framework catching a bad decision, trust in experimentation grew exponentially. The hardest part was sample size discipline: teams wanted to peek early and call winners. Building in sequential testing with proper stopping rules solved this without slowing the team down."</div>
+      </div>
+
+      <div class="case-nav fade-in">
+        <a href="case-synlitics.html" class="case-nav-link"><div class="case-nav-label">← Previous</div><div class="case-nav-title">Synlitics — Restaurant Analytics SaaS</div></a>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="container"><p>© 2026 Raj Jaiswal. Built with precision.</p></div></footer>
+  <script src="script-optimized.js" defer></script>
+</body>
+</html>

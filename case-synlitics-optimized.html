@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synlitics — Restaurant Analytics SaaS — Raj Jaiswal</title>
+  <meta name="description" content="Built a restaurant analytics SaaS platform reducing reporting time by 5 hrs/week.">
+  <meta name="theme-color" content="#0B0B0C">
+  <link rel="stylesheet" href="styles-optimized.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Performance Optimizations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  </head>
+<body>
+  <nav class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">raj<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="index.html#philosophy">Approach</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="case-study-hero">
+    <div class="container">
+      <a href="index.html#projects" class="case-back fade-in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Projects
+      </a>
+      <h1 class="case-title fade-in fade-in-delay-1">Synlitics — Restaurant Analytics SaaS</h1>
+      <p class="case-outcome fade-in fade-in-delay-2">Reduced reporting time by 5 hrs/week and enabled proactive churn detection for restaurant operators</p>
+      <div class="case-meta fade-in fade-in-delay-3">
+        <div class="case-meta-item"><span class="label">Type</span><span class="value">SaaS · Data Platform</span></div>
+        <div class="case-meta-item"><span class="label">Stack</span><span class="value">Supabase · PostgreSQL · n8n · Power BI</span></div>
+        <div class="case-meta-item"><span class="label">Impact</span><span class="value">-5 hrs/week · Proactive alerts</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-content">
+    <div class="container">
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">01 — Problem</span>
+        <h2 class="case-section-title">Product Context</h2>
+        <p class="case-text">Restaurant operators managed data across <strong>disconnected tools</strong> — POS systems, delivery platforms, review sites, and spreadsheets. Weekly reporting consumed 5+ hours of manual work. Beyond the time cost, operators had <strong>no early warning system</strong> for business risks like declining repeat rates or delivery margin erosion.</p>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">02 — System Architecture</span>
+        <h2 class="case-section-title">Data & System Design</h2>
+        <p class="case-text">Built a complete analytics platform: automated data ingestion from multiple sources, centralized warehouse, automated reporting, and proactive alert system.</p>
+        <div class="case-architecture">
+          <div class="arch-flow">
+            <div class="arch-node">POS System<br><small style="color:var(--text-secondary)">Sales data</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Delivery APIs<br><small style="color:var(--text-secondary)">Swiggy / Zomato</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">n8n ETL<br><small>Automated ingestion</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node highlight">Supabase / PostgreSQL<br><small>Central warehouse</small></div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-node">Power BI<br><small style="color:var(--text-secondary)">Dashboards + Alerts</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">03 — Platform</span>
+        <h2 class="case-section-title">Key System Components</h2>
+        <div class="model-details">
+          <div class="model-detail-item"><span class="model-detail-label">Data Ingestion</span><span class="model-detail-value">Automated ETL via n8n workflows: POS data, delivery APIs, Google reviews — all into Supabase/PostgreSQL</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Data Modeling</span><span class="model-detail-value">Star-schema warehouse: fact tables for transactions, dimension tables for products, time, and segments</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Reporting</span><span class="model-detail-value">Power BI dashboards auto-refreshed daily: revenue trends, item performance, delivery comparison, retention cohorts</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Alert System</span><span class="model-detail-value">Automated alerts for anomalies: revenue drops >15%, review decline, delivery cancellation spikes</span></div>
+          <div class="model-detail-item"><span class="model-detail-label">Churn Detection</span><span class="model-detail-value">Rule-based churn risk scoring for repeat customers using recency/frequency analysis</span></div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">04 — Output Layer</span>
+        <h2 class="case-section-title">Dashboard & Reporting</h2>
+        <p class="case-text">Power BI dashboards replaced manual reporting entirely. Operators see key metrics at a glance with daily auto-refresh and trend analysis.</p>
+        <div class="case-dashboard" style="padding: 40px; background: var(--bg-card);">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Weekly Revenue</div>
+              <div style="font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--success);">₹4.2L</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Avg Rating</div>
+              <div style="font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--warning);">4.3★</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Repeat Rate</div>
+              <div style="font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--accent-light);">32%</div>
+            </div>
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">At-Risk</div>
+              <div style="font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--danger);">127</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">05 — Insights</span>
+        <h2 class="case-section-title">Key Findings</h2>
+        <ul class="insights-list">
+          <li>Delivery platform margins were <strong>15-20% lower</strong> than dine-in — operators were unaware of per-channel cost</li>
+          <li>Repeat customer rate was the <strong>strongest predictor</strong> of long-term revenue stability</li>
+          <li>Negative reviews correlated with <strong>vendor changes</strong> — supply chain signal in review data</li>
+          <li>Weekend sales were <strong>highly predictable</strong> — enabling better scheduling and inventory positioning</li>
+        </ul>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">06 — Decision Layer</span>
+        <h2 class="case-section-title">How the platform drove decisions</h2>
+        <p class="case-text">Operators moved from <strong>"monthly look-back"</strong> to <strong>"daily awareness."</strong> The alert system surfaced problems before they compounded. One operator used channel margin analysis to <strong>renegotiate delivery commissions</strong>, saving ₹50K/month. Another adjusted weekend staffing 30% based on demand patterns.</p>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">07 — Impact</span>
+        <h2 class="case-section-title">Business Impact</h2>
+        <div class="impact-grid">
+          <div class="impact-card"><div class="impact-label">Reporting Time</div><div class="impact-value">-5 hrs/wk</div><div class="impact-detail">Fully automated</div></div>
+          <div class="impact-card"><div class="impact-label">Churn Detection</div><div class="impact-value">Proactive</div><div class="impact-detail">Early warning system</div></div>
+          <div class="impact-card"><div class="impact-label">Data Sources</div><div class="impact-value">5+</div><div class="impact-detail">Unified warehouse</div></div>
+        </div>
+      </div>
+
+      <div class="case-section fade-in">
+        <span class="case-section-label">08 — Learnings</span>
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="learning-block">"The hardest part wasn't the technology — it was understanding the operator's workflow. We initially built beautiful dashboards, but operators wanted alerts and summaries. Redesigning around 'tell me what's wrong' instead of 'explore your data' dramatically increased adoption."</div>
+      </div>
+
+      <div class="case-nav fade-in">
+        <a href="case-forecast.html" class="case-nav-link"><div class="case-nav-label">← Previous</div><div class="case-nav-title">Sales Forecasting Engine</div></a>
+        <a href="case-experimentation.html" class="case-nav-link next"><div class="case-nav-label">Next Project →</div><div class="case-nav-title">Experimentation & A/B Testing</div></a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="container"><p>© 2026 Raj Jaiswal. Built with precision.</p></div></footer>
+  <script src="script-optimized.js" defer></script>
+</body>
+</html>
