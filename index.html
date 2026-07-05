@@ -21,7 +21,7 @@
       theme: {
         extend: {
           colors: {
-            background: "#0B0D10",
+            background: "rgba(11, 13, 16, 0.4)",
             surface: "#141820",
             primary: "#EDEDED",
             muted: "#8B9AB0",
@@ -39,9 +39,20 @@
     }
   </script>
   <style>
-    :root { --accent: #2DD4A8; }
+    :root { 
+      --accent: #2DD4A8; 
+      --accent-rgb: 45, 212, 168;
+      --shadow-1: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-2: 0 8px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+      --shadow-3: 0 20px 60px rgba(0,0,0,0.5), 0 8px 20px rgba(0,0,0,0.3);
+      --shadow-4: 0 40px 100px rgba(0,0,0,0.6), 0 16px 40px rgba(0,0,0,0.4);
+      --shadow-accent: 0 20px 60px rgba(var(--accent-rgb), 0.08), 0 8px 20px rgba(0,0,0,0.4);
+    }
     body {
       background-color: #0B0D10;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(var(--accent-rgb), 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(var(--accent-rgb), 0.03) 0%, transparent 70%);
       color: #EDEDED;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
@@ -59,9 +70,173 @@
     .glow-radial {
       background: radial-gradient(circle at center, rgba(45, 212, 168, 0.12) 0%, rgba(11, 13, 16, 0) 60%);
     }
-    .card-border { border: 1px solid rgba(255, 255, 255, 0.06); }
-    .card-hover { transition: all 0.2s ease-in-out; }
-    .card-hover:hover { border-color: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+    .card-border { 
+      border: 1px solid rgba(255, 255, 255, 0.06); 
+      box-shadow: var(--shadow-2);
+    }
+    
+    /* tsParticles Background */
+    #tsparticles {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: auto;
+    }
+
+    /* 3D Tilt Card Physics & Glowing Border */
+    .tilt-card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, box-shadow 0.3s ease-out;
+      will-change: transform;
+    }
+    .tilt-card:hover {
+      box-shadow: var(--shadow-4), 0 20px 40px rgba(45, 212, 168, 0.1);
+    }
+    
+    /* Vibrant Mouse-Tracking Border Glow */
+    .tilt-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px; /* Border thickness */
+      background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(45, 212, 168, 0.9), /* Accent cyan */
+        rgba(14, 165, 233, 0.8) 30%, /* Deep blue */
+        transparent 60%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Subtle Inner Glare */
+    .tilt-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      border-radius: inherit;
+      background: radial-gradient(
+        800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(45, 212, 168, 0.15),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      mix-blend-mode: overlay;
+    }
+    
+    .tilt-card:hover::before,
+    .tilt-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Hero Cards Stack */
+    .hero-cards-stack {
+      position: relative;
+      width: 360px;
+      height: 300px;
+    }
+    .hero-card:nth-child(3) {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 280px;
+      transform: rotate(0deg) translateZ(0px);
+      z-index: 1;
+      background: #0B0D10;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .hero-card:nth-child(2) {
+      position: absolute;
+      top: 40px;
+      right: 30px;
+      width: 300px;
+      transform: rotate(1deg);
+      z-index: 2;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .hero-card:nth-child(1) {
+      position: absolute;
+      top: 0;
+      right: 60px;
+      width: 320px;
+      transform: rotate(-3deg);
+      z-index: 3;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .hero-card {
+      border-radius: 16px;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(12px);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .hero-cards-stack:hover .hero-card:nth-child(1) {
+      transform: rotate(-3deg) translateY(-8px);
+      box-shadow: var(--shadow-4);
+    }
+
+    /* Credibility Badges */
+    .credibility-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .badge {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: rgba(237,237,237,0.65);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      white-space: nowrap;
+    }
+
+    /* Project Cards (4-quadrant breakdown) */
+    .project-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.06); /* gap colour */
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .project-quadrant {
+      background: rgba(255,255,255,0.02);
+      padding: 20px;
+    }
+    .quadrant-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .quadrant-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(237,237,237,0.75);
+    }
     .tech-tag {
       background-color: rgba(45, 212, 168, 0.1);
       color: #2DD4A8;
@@ -138,6 +313,8 @@
       .expand-btn { font-family:'JetBrains Mono',monospace; font-size:11px; color:#2DD4A8; background:transparent; border:none; padding:8px 0 0; cursor:pointer; letter-spacing:0.04em; }
       .expand-btn:hover { opacity:0.8; }
       .expanded-content { margin-top:8px; }
+      /* Project Breakdown Mobile */
+      .project-breakdown { grid-template-columns: 1fr; grid-template-rows: auto; }
       /* Experience bullets collapse */
       .exp-bullet-extra { display:none !important; }
       .exp-expand-btn { font-family:'JetBrains Mono',monospace; font-size:11px; color:#2DD4A8; background:transparent; border:none; padding:8px 0 0; cursor:pointer; letter-spacing:0.04em; display:block; }
@@ -182,9 +359,10 @@
   </style>
 </head>
 <body class="antialiased">
+  <div id="tsparticles"></div>
 
   <!-- ========== NAVIGATION ========== -->
-  <nav class="fixed top-0 w-full z-50 bg-[#0B0D10]/80 backdrop-blur-md border-b border-white/5" id="nav">
+  <nav class="fixed top-0 w-full z-50 /80 backdrop-blur-md border-b border-white/5" id="nav">
     <div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
       <a class="font-headline text-2xl font-bold text-primary hover:opacity-80 transition-opacity" href="index.html">raj<span class="text-accent">.</span></a>
       <div class="hidden md:flex items-center space-x-8">
@@ -219,52 +397,97 @@
   <section class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden" id="hero">
     <div class="absolute inset-0 bg-grid-pattern pointer-events-none z-0"></div>
     <div class="absolute inset-0 glow-radial pointer-events-none z-0"></div>
-    <div class="max-w-7xl mx-auto px-6 relative z-10 w-full flex flex-col items-start pt-12 md:pt-20">
-      <!-- Status Badge -->
-      <div class="inline-flex items-center space-x-2 bg-surface/80 border border-white/10 rounded-full px-3 py-1.5 mb-8 card-border fade-in">
-        <div class="w-2 h-2 rounded-full bg-success status-dot"></div>
-        <span class="font-mono text-xs text-muted uppercase tracking-wider">Available · Remote · AI Systems Engineering</span>
-      </div>
-      <!-- Main Intro -->
-      <div class="max-w-4xl mb-12">
+    <div class="max-w-7xl mx-auto px-6 relative z-10 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center pt-12 md:pt-20">
+      
+      <!-- Left Column -->
+      <div class="flex flex-col items-start w-full max-w-2xl">
+        <!-- Status Badge -->
+        <div class="inline-flex items-center space-x-2 bg-surface/80 border border-white/10 rounded-full px-3 py-1.5 mb-8 card-border fade-in">
+          <div class="w-2 h-2 rounded-full bg-success status-dot"></div>
+          <span class="font-mono text-xs text-muted uppercase tracking-wider">Available · Remote · AI Systems Engineering</span>
+        </div>
+        
+        <!-- Main Intro -->
         <h1 class="font-headline text-[44px] md:text-[64px] leading-tight font-extrabold text-primary mb-4 tracking-tight fade-in fade-delay-1">Raj Jaiswal</h1>
         <h2 class="font-headline text-[20px] md:text-[24px] font-bold text-primary mb-6 leading-snug fade-in fade-delay-2">I build agentic AI systems that know when to stop and ask a human.</h2>
+        
         <!-- Desktop subhead -->
-        <p class="desktop-subhead font-body text-base text-muted max-w-2xl leading-relaxed fade-in fade-delay-2">Production-grade agents with durable checkpointing, CI-gated hallucination detection, and full observability — not notebook demos.</p>
+        <p class="desktop-subhead font-body text-base text-muted leading-relaxed fade-in fade-delay-2">Production-grade agents with durable checkpointing, CI-gated hallucination detection, and full observability — not notebook demos.</p>
         <!-- Mobile subhead -->
-        <p class="mobile-subhead font-body text-sm text-muted max-w-sm leading-relaxed fade-in fade-delay-2">Production agents. Durable. Observable. Not notebook demos.</p>
+        <p class="mobile-subhead font-body text-sm text-muted leading-relaxed fade-in fade-delay-2">Production agents. Durable. Observable. Not notebook demos.</p>
+        
+        <!-- Credibility Badges -->
+        <div class="credibility-badges fade-in fade-delay-2">
+          <span class="badge">IIT Roorkee</span>
+          <span class="badge">5★ Upwork · Verified</span>
+          <span class="badge">Founder · Synlitics</span>
+          <span class="badge">3 systems in production</span>
+          <span class="badge">Rust OS contributor</span>
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4 mt-12 mb-8 md:mb-0 fade-in fade-delay-3">
+          <a class="inline-flex items-center justify-center bg-accent text-[#0B0D10] font-semibold px-6 py-3 rounded text-sm hover:bg-accent/90 transition-colors shadow-[0_0_15px_rgba(45,212,168,0.2)]" href="#systems">View Systems</a>
+          <a class="inline-flex items-center justify-center bg-transparent text-primary border border-white/20 font-medium px-6 py-3 rounded text-sm hover:bg-white/5 transition-colors" href="https://github.com/rajc6h6" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined mr-2 text-[18px]">terminal</span>GitHub
+          </a>
+        </div>
       </div>
-      <!-- Mobile hero node graph -->
-      <div class="hero-node-graph fade-in fade-delay-2">
-        <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" width="280" height="140" aria-hidden="true">
-          <line x1="40" y1="70" x2="90" y2="40" stroke="#2DD4A8" stroke-opacity="0.35" stroke-width="1"/>
-          <line x1="40" y1="70" x2="88" y2="100" stroke="#2DD4A8" stroke-opacity="0.35" stroke-width="1"/>
-          <line x1="90" y1="40" x2="160" y2="35" stroke="#2DD4A8" stroke-opacity="0.35" stroke-width="1"/>
-          <line x1="88" y1="100" x2="160" y2="105" stroke="#2DD4A8" stroke-opacity="0.35" stroke-width="1"/>
-          <line x1="160" y1="35" x2="170" y2="70" stroke="#2DD4A8" stroke-opacity="0.35" stroke-width="1"/>
-          <line x1="160" y1="105" x2="170" y2="70" stroke="#2DD4A8" stroke-opacity="0.35" stroke-width="1"/>
-          <line x1="170" y1="70" x2="240" y2="50" stroke="#2DD4A8" stroke-opacity="0.5" stroke-width="1.5"/>
-          <line x1="240" y1="50" x2="268" y2="80" stroke="#2DD4A8" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="3,3"/>
-          <circle cx="40" cy="70" r="7" fill="#2DD4A8" fill-opacity="0.6"/>
-          <circle cx="90" cy="40" r="6" fill="#2DD4A8" fill-opacity="0.45"/>
-          <circle cx="88" cy="100" r="6" fill="#2DD4A8" fill-opacity="0.45"/>
-          <circle cx="160" cy="35" r="5" fill="#2DD4A8" fill-opacity="0.35"/>
-          <circle cx="160" cy="105" r="5" fill="#2DD4A8" fill-opacity="0.35"/>
-          <circle cx="170" cy="70" r="7" fill="#2DD4A8" fill-opacity="0.55"/>
-          <circle cx="268" cy="80" r="5" fill="#2DD4A8" fill-opacity="0.3"/>
-          <circle cx="240" cy="50" r="9" fill="#2DD4A8" fill-opacity="0.85" class="pulse-node pulse-node-b"/>
-          <circle cx="240" cy="50" r="15" fill="none" stroke="#2DD4A8" stroke-opacity="0.2" stroke-width="1.5" class="pulse-node pulse-node-b"/>
-        </svg>
+
+      <!-- Right Column: Hero Cards -->
+      <div class="relative w-full flex justify-center md:justify-end fade-in fade-delay-3">
+        <!-- Desktop Stacked Cards -->
+        <div class="hero-cards-stack hidden md:block">
+          <div class="hero-card">
+            <h3 class="font-mono text-sm text-primary mb-2 uppercase tracking-wide">Production Systems</h3>
+            <p class="text-xs text-muted mb-4 font-body">Three agentic AI systems deployed.</p>
+            <p class="text-[10px] text-accent font-mono">LangGraph · PydanticAI · FastMCP</p>
+          </div>
+          <div class="hero-card">
+            <h3 class="font-mono text-sm text-primary mb-2 uppercase tracking-wide">Client Work</h3>
+            <p class="text-xs text-muted mb-4 font-body">3 systems shipped for paying clients.</p>
+            <p class="text-[10px] text-accent font-mono">AI agents · RAG · Workflow automation</p>
+          </div>
+          <div class="hero-card">
+            <div class="text-muted mb-2">$ stack --current</div>
+            <div class="text-accent mb-4 leading-relaxed">LangGraph + PydanticAI + FastMCP<br>pgvector + Logfire + Docker</div>
+            <div class="text-muted mb-2">$ status</div>
+            <div class="text-primary">Available · Remote</div>
+          </div>
+        </div>
+        
+        <!-- Mobile fallback card -->
+        <div class="hero-card md:hidden w-full max-w-sm mx-auto shadow-2xl shadow-black/50">
+          <h3 class="font-mono text-sm text-primary mb-2 uppercase tracking-wide">Production Systems</h3>
+          <p class="text-xs text-muted mb-4 font-body">Three agentic AI systems deployed.</p>
+          <p class="text-[10px] text-accent font-mono">LangGraph · PydanticAI · FastMCP</p>
+        </div>
       </div>
-      <!-- CTAs -->
-      <div class="flex flex-wrap gap-4 mb-20 fade-in fade-delay-3">
-        <a class="inline-flex items-center justify-center bg-accent text-[#0B0D10] font-semibold px-6 py-3 rounded text-sm hover:bg-accent/90 transition-colors shadow-[0_0_15px_rgba(45,212,168,0.2)]" href="#systems">View Systems</a>
-        <a class="inline-flex items-center justify-center bg-transparent text-primary border border-white/20 font-medium px-6 py-3 rounded text-sm hover:bg-white/5 transition-colors" href="https://github.com/rajc6h6" target="_blank" rel="noopener">
-          <span class="material-symbols-outlined mr-2 text-[18px]">terminal</span>GitHub
-        </a>
-      </div>
-      <!-- Metrics Grid -->
-      <div class="metrics-grid w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      
+    </div>
+  </section>
+
+  <!-- ========== PRODUCTION AI SYSTEMS ========== -->
+  <section class="py-24 px-6 md:px-12 bg-[#0F1115] border-y border-white/5" id="systems">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <!-- LEFT COLUMN: Sticky Header -->
+        <div class="lg:col-span-3 lg:sticky lg:top-32 fade-in z-10">
+          <div class="mb-12 lg:mb-0">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-px bg-accent"></div>
+              <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">PRODUCTION SYSTEMS</span>
+            </div>
+            <h2 class="font-headline text-4xl md:text-[40px] font-extrabold text-primary mb-4 tracking-tight leading-tight">Systems I built. Decisions they prevented.</h2>
+            <p class="text-muted text-lg font-body mb-4">Each system is production-grade, containerized, and observable end-to-end.</p>
+            <span class="swipe-hint">swipe to explore →</span>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Scrolling Cards -->
+        <div class="lg:col-span-9 w-full z-10">
+          <!-- Metrics Grid (Migrated from Hero) -->
+          <div class="metrics-grid w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-16 fade-in fade-delay-1">
         <div class="metric-card bg-surface/50 border border-white/5 rounded-lg p-5 flex flex-col justify-between hover:bg-surface hover:border-white/10 transition-all duration-200 group relative overflow-hidden">
           <div class="absolute left-0 top-0 bottom-0 w-1 bg-accent/20 group-hover:bg-accent/50 transition-colors"></div>
           <div class="pl-3">
@@ -306,544 +529,467 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ========== PRODUCTION AI SYSTEMS ========== -->
-  <section class="py-24 px-6 md:px-12 bg-[#0F1115] border-y border-white/5" id="systems">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-16 fade-in">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-8 h-px bg-accent"></div>
-          <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">PRODUCTION SYSTEMS</span>
-        </div>
-        <h2 class="font-headline text-4xl md:text-[40px] font-extrabold text-primary mb-4 tracking-tight leading-tight">Systems I built. Decisions they prevented.</h2>
-        <p class="text-muted text-lg max-w-2xl font-body">Each system is production-grade, containerized, and observable end-to-end.</p>
-        <span class="swipe-hint">swipe to explore →</span>
-      </div>
-
-      <!-- MOBILE: carousel -->
-      <div class="card-carousel-wrapper">
-        <div class="card-carousel" id="prod-carousel">
-          <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden">
-            <div class="p-8">
+      <!-- UNIFIED: Mobile Carousel + Desktop Stack -->
+      <div class="prod-unified-container">
+        <!-- We use the existing card-carousel class logic for mobile, and override for desktop using Tailwind classes -->
+        <div class="card-carousel md:flex-col md:overflow-visible md:space-y-12 md:p-0 md:gap-0" id="prod-carousel">
+          
+          <!-- Card 1: Contract Intelligence Engine -->
+          <article class="tilt-card bg-surface card-border rounded-xl overflow-hidden md:w-full md:max-w-none fade-in fade-delay-1">
+            <div class="p-6 md:p-8">
               <div class="flex flex-wrap gap-3 mb-4">
                 <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Production system</span>
                 <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Legal-risk AI agent</span>
               </div>
-              <h3 class="font-headline text-xl font-bold text-primary mb-3">Contract Intelligence Engine</h3>
-              <p class="text-muted text-sm mb-4">An autonomous contract analyst that knows when a contract is too risky to auto-approve — and stops itself.</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Logfire</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-4">
+                <h3 class="font-headline text-2xl font-bold text-primary">Contract Intelligence Engine</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
+                </div>
               </div>
-              <ul class="space-y-2 font-mono text-sm text-muted mb-3">
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>durable mid-execution checkpointing via AsyncPostgresSaver</span></li>
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>hybrid retrieval combining embeddings with structured metadata filters</span></li>
-              </ul>
-              <button class="expand-btn" onclick="toggleExpand(this)">+ 2 more details</button>
-              <div class="expanded-content" hidden>
-                <ul class="space-y-2 font-mono text-sm text-muted mt-2">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>Logfire-traced retry on ValidationError</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>CI suite blocking merges above 5% hallucination rate</span></li>
-                </ul>
-                <div class="bg-background border-l-2 border-accent p-4 rounded-r mt-3">
-                  <p class="font-mono text-xs text-muted leading-relaxed"><span class="text-accent">&gt;</span> The hardest part wasn't extraction — it was deciding the threshold for when the agent should stop trusting itself. <span class="text-primary bg-white/5 px-1 rounded">interrupt_before</span> on a risk score above 40 was the line between a useful tool and a liability.</p>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left: SVG Diagram -->
+                <div class="flex items-center justify-center bg-background border border-white/[0.06] rounded-xl p-6 relative overflow-hidden min-h-[240px]">
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(45,212,168,0.05)_0%,transparent_60%)] pointer-events-none"></div>
+                  <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-[280px] relative z-10" aria-hidden="true">
+                    <defs><marker id="arr1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon fill="#2DD4A8" points="0 0, 6 3, 0 6"></polygon></marker>
+                          <marker id="arrWarn" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon fill="#F59E0B" points="0 0, 6 3, 0 6"></polygon></marker></defs>
+                    <rect x="10" y="85" width="60" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                    <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="40" y="103">Ingest</text>
+                    <line x1="70" y1="100" x2="105" y2="100" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arr1)" />
+                    
+                    <rect x="110" y="85" width="80" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                    <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" text-anchor="middle" x="150" y="103">Risk Score</text>
+                    <circle cx="150" cy="100" r="30" fill="none" stroke="#2DD4A8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4" class="pulse-node" />
+                    
+                    <line x1="190" y1="95" x2="225" y2="65" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arr1)" />
+                    <rect x="230" y="50" width="60" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                    <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="260" y="68">Approve</text>
+                    
+                    <line x1="190" y1="105" x2="225" y2="135" stroke="#F59E0B" stroke-width="1.5" marker-end="url(#arrWarn)" />
+                    <rect x="230" y="120" width="60" height="30" rx="4" fill="#141820" stroke="#F59E0B" stroke-width="1.5" />
+                    <text fill="#F59E0B" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" text-anchor="middle" x="260" y="138">interrupt</text>
+                  </svg>
+                </div>
+
+                <!-- Right: 4 Quadrants -->
+                <div class="project-breakdown">
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">What it is</span>
+                    <p class="quadrant-body">An AI agent that reads contracts, scores risk, and stops itself before making a decision it isn't confident in.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">What I built</span>
+                    <p class="quadrant-body">Structured extraction pipeline using PydanticAI, pgvector hybrid retrieval over 500+ historical clauses, and a risk scorer that triggers <code class="bg-white/5 px-1 rounded text-primary">interrupt_before</code> at score > 40.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">The hard part</span>
+                    <p class="quadrant-body">Deciding when the agent should stop trusting itself. <code class="bg-white/5 px-1 rounded text-primary">interrupt_before</code> on a risk score above 40 was the line between a useful tool and a liability.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">Why it works</span>
+                    <p class="quadrant-body">Hallucination rate under 5% — CI blocks any merge that exceeds it. AsyncPostgresSaver means a mid-execution crash loses nothing.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </article>
-          <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden">
-            <div class="p-8">
+
+          <!-- Card 2: Dependency Drift Sentinel -->
+          <article class="tilt-card bg-surface card-border rounded-xl overflow-hidden md:w-full md:max-w-none fade-in fade-delay-2">
+            <div class="p-6 md:p-8">
               <div class="flex flex-wrap gap-3 mb-4">
                 <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Production system</span>
                 <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Autonomous CVE auditor</span>
               </div>
-              <h3 class="font-headline text-xl font-bold text-primary mb-3">Dependency Drift Sentinel</h3>
-              <p class="text-muted text-sm mb-4">Catches vulnerable dependencies before they merge — and re-checks its own fix until the vulnerability is actually gone.</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastMCP</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">OSV.dev</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-4">
+                <h3 class="font-headline text-2xl font-bold text-primary">Dependency Drift Sentinel</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">GitHub Actions</span>
+                </div>
               </div>
-              <ul class="space-y-2 font-mono text-sm text-muted mb-3">
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>cyclic LangGraph loop that re-runs until critical CVEs resolved</span></li>
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>recursive eval re-validates the agent's own migration suggestions</span></li>
-              </ul>
-              <button class="expand-btn" onclick="toggleExpand(this)">+ 1 more detail</button>
-              <div class="expanded-content" hidden>
-                <ul class="space-y-2 font-mono text-sm text-muted mt-2">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>packaged as Docker container deployable as GitHub Actions runner</span></li>
-                </ul>
-                <div class="bg-background border-l-2 border-accent p-4 rounded-r mt-3">
-                  <p class="font-mono text-xs text-muted leading-relaxed"><span class="text-accent">&gt;</span> OSV.dev alone misses aliased package names. Layering semantic search over the CVE corpus on top catches the cases OSV.dev alone didn't.</p>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left: SVG Diagram -->
+                <div class="flex items-center justify-center bg-background border border-white/[0.06] rounded-xl p-6 relative overflow-hidden min-h-[240px]">
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(45,212,168,0.05)_0%,transparent_60%)] pointer-events-none"></div>
+                  <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-[280px] relative z-10" aria-hidden="true">
+                    <rect x="20" y="85" width="50" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                    <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="45" y="103">PR Check</text>
+                    <line x1="70" y1="100" x2="105" y2="100" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arr1)" />
+                    
+                    <rect x="110" y="85" width="80" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                    <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" text-anchor="middle" x="150" y="103">OSV + Vector</text>
+                    
+                    <line x1="190" y1="100" x2="225" y2="100" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arr1)" />
+                    <rect x="230" y="85" width="60" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                    <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="260" y="103">Migrate</text>
+                    
+                    <path d="M260,80 C260,40 150,40 150,75" fill="none" stroke="#2DD4A8" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arr1)" />
+                    <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="205" y="50">Re-verify</text>
+                  </svg>
+                </div>
+
+                <!-- Right: 4 Quadrants -->
+                <div class="project-breakdown">
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">What it is</span>
+                    <p class="quadrant-body">A GitHub Actions agent that catches vulnerable dependencies before they merge — and keeps re-checking until the vulnerability is actually gone.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">What I built</span>
+                    <p class="quadrant-body">Cyclic LangGraph loop resolving the full transitive dependency tree, cross-referenced against OSV.dev plus a semantic CVE search layer via pgvector.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">The hard part</span>
+                    <p class="quadrant-body">OSV.dev alone misses aliased package names. Layering semantic search over the CVE corpus is what caught the cases the deterministic check didn't.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">Why it works</span>
+                    <p class="quadrant-body">47 CVEs caught across scans. Recursive self-validation: the agent re-checks its own migration suggestions, not just the original tree.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </article>
-          <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden">
-            <div class="p-8">
+
+          <!-- Card 3: Shadow-Mode AI Deployment Proxy -->
+          <article class="tilt-card bg-surface card-border rounded-xl overflow-hidden md:w-full md:max-w-none fade-in fade-delay-3">
+            <div class="p-6 md:p-8">
               <div class="flex flex-wrap gap-3 mb-4">
                 <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Production system</span>
                 <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Zero-risk AI rollout</span>
               </div>
-              <h3 class="font-headline text-xl font-bold text-primary mb-3">Shadow-Mode AI Deployment Proxy</h3>
-              <p class="text-muted text-sm mb-4">Lets a team test a new AI agent against 100% of real production traffic with zero risk to users.</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">asyncio</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Redis</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LLM-as-judge</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-4">
+                <h3 class="font-headline text-2xl font-bold text-primary">Shadow-Mode AI Deployment Proxy</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">asyncio</span>
+                  <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LLM-as-judge</span>
+                </div>
               </div>
-              <ul class="space-y-2 font-mono text-sm text-muted mb-3">
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>zero added latency to real users</span></li>
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>three-layer divergence detection, not just exact-match diffing</span></li>
-              </ul>
-              <button class="expand-btn" onclick="toggleExpand(this)">+ 2 more details</button>
-              <div class="expanded-content" hidden>
-                <ul class="space-y-2 font-mono text-sm text-muted mt-2">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>nightly k-means clustering surfaces systematic failure patterns</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>full stack containerized for reproducible deploy</span></li>
-                </ul>
-                <div class="bg-background border-l-2 border-accent p-4 rounded-r mt-3">
-                  <p class="font-mono text-xs text-muted leading-relaxed"><span class="text-accent">&gt;</span> Cutting shadow-agent cost from $0.043 to $0.011 per request via semantic caching makes shadow-mode testing affordable enough to run continuously.</p>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left: SVG Diagram -->
+                <div class="flex items-center justify-center bg-background border border-white/[0.06] rounded-xl p-6 relative overflow-hidden min-h-[240px]">
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(45,212,168,0.05)_0%,transparent_60%)] pointer-events-none"></div>
+                  <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-[280px] relative z-10" aria-hidden="true">
+                    <rect x="10" y="85" width="50" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                    <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="35" y="103">Request</text>
+                    <line x1="60" y1="100" x2="85" y2="100" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arr1)" />
+                    
+                    <rect x="90" y="50" width="70" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                    <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="125" y="68">Legacy API</text>
+                    <path d="M70,100 C80,100 80,65 85,65" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                    
+                    <rect x="90" y="120" width="70" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" stroke-dasharray="2,2" />
+                    <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="125" y="138">Shadow Agent</text>
+                    <path d="M70,100 C80,100 80,135 85,135" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                    
+                    <path d="M160,65 C170,65 170,100 175,100" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                    <path d="M160,135 C170,135 170,100 175,100" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                    
+                    <rect x="180" y="85" width="90" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                    <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" text-anchor="middle" x="225" y="103">CI Diff &amp; Gate</text>
+                  </svg>
+                </div>
+
+                <!-- Right: 4 Quadrants -->
+                <div class="project-breakdown">
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">What it is</span>
+                    <p class="quadrant-body">Infrastructure that lets a team run a new AI agent against 100% of real production traffic with zero risk to live users.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">What I built</span>
+                    <p class="quadrant-body"><code class="bg-white/5 px-1 rounded text-primary">asyncio.gather</code> fan-out to legacy + shadow in parallel, three-layer divergence detection (schema → embedding similarity → LLM-as-judge), nightly k-means clustering of failures.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">The hard part</span>
+                    <p class="quadrant-body">Cutting per-request cost from $0.043 to $0.011 via semantic caching — not optimization for its own sake, but what makes continuous shadow testing affordable rather than a pre-launch ritual.</p>
+                  </div>
+                  <div class="project-quadrant">
+                    <span class="quadrant-label">Why it works</span>
+                    <p class="quadrant-body">Zero latency added to real users. CI gate requires ≥95% agreement before promoting the shadow agent to production.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </article>
         </div>
-        <div class="carousel-dots" id="prod-dots">
+        
+        <!-- Mobile Dots -->
+        <div class="carousel-dots md:hidden" id="prod-dots">
           <div class="carousel-dot active" onclick="scrollToCard('prod-carousel','prod-dots',0)"></div>
           <div class="carousel-dot" onclick="scrollToCard('prod-carousel','prod-dots',1)"></div>
           <div class="carousel-dot" onclick="scrollToCard('prod-carousel','prod-dots',2)"></div>
         </div>
       </div>
-
-      <!-- DESKTOP: stacked cards -->
-      <div class="desktop-card-list space-y-12">
-
-        <!-- Card 1: Contract Intelligence Engine -->
-        <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden group hover:-translate-y-0.5 transition-transform duration-300 fade-in fade-delay-1">
-          <div class="p-8">
-            <div class="flex flex-wrap gap-3 mb-6">
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Production system</span>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Legal-risk AI agent</span>
-            </div>
-            <h3 class="font-headline text-2xl font-bold text-primary mb-3">Contract Intelligence Engine</h3>
-            <p class="text-muted text-base mb-8 max-w-3xl">An autonomous contract analyst that knows when a contract is too risky to auto-approve — and stops itself.</p>
-            <!-- Architecture Strip SVG -->
-            <div class="arch-strip mb-8 w-full bg-background border border-white/[0.06] rounded p-4 overflow-x-auto">
-              <svg fill="none" viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" class="w-full min-w-[700px] h-[120px]">
-                <defs><marker id="ah1" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon fill="#2DD4A8" points="0 0, 10 3.5, 0 7"></polygon></marker></defs>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="110" x="10" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" x="65" y="65">Ingest contract</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="110" x="140" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" x="195" y="65">RAG retrieval</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="110" x="270" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" x="325" y="65">PydanticAI Ext.</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="110" x="400" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" x="455" y="65">Risk scoring</text>
-                <!-- Highlighted Node: interrupt_before -->
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="2" width="110" x="530" y="40"></rect>
-                <circle cx="538" cy="48" fill="#2DD4A8" r="3"><animate attributeName="opacity" dur="2s" repeatCount="indefinite" values="1;0.2;1"></animate></circle>
-                <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" text-anchor="middle" x="585" y="65">interrupt_before</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="110" x="660" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" x="715" y="65">Human Review</text>
-                <!-- Connectors -->
-                <line marker-end="url(#ah1)" stroke="#2DD4A8" stroke-width="1" x1="120" x2="135" y1="60" y2="60"></line>
-                <line marker-end="url(#ah1)" stroke="#2DD4A8" stroke-width="1" x1="250" x2="265" y1="60" y2="60"></line>
-                <line marker-end="url(#ah1)" stroke="#2DD4A8" stroke-width="1" x1="380" x2="395" y1="60" y2="60"></line>
-                <line marker-end="url(#ah1)" stroke="#2DD4A8" stroke-width="1" x1="510" x2="525" y1="60" y2="60"></line>
-                <line marker-end="url(#ah1)" stroke="#2DD4A8" stroke-width="1" x1="640" x2="655" y1="60" y2="60"></line>
-              </svg>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div class="bg-background border-l-2 border-accent p-5 rounded-r">
-                <p class="font-mono text-sm text-muted leading-relaxed">
-                  <span class="text-accent">&gt;</span> The hardest part wasn't extraction — it was deciding the threshold for when the agent should stop trusting itself. <span class="text-primary bg-white/5 px-1 rounded">interrupt_before</span> on a risk score above 40 was the line between a useful tool and a liability.
-                </p>
-              </div>
-              <div>
-                <ul class="space-y-3 font-mono text-sm text-muted">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>durable mid-execution checkpointing via AsyncPostgresSaver</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>hybrid retrieval combining embeddings with structured metadata filters</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>Logfire-traced retry on ValidationError</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>CI suite blocking merges above 5% hallucination rate using LLM-as-judge on 30 labelled contracts</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 border-t border-white/[0.06] pt-6">
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">AsyncPostgresSaver</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Logfire</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Card 2: Dependency Drift Sentinel -->
-        <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden group hover:-translate-y-0.5 transition-transform duration-300 fade-in fade-delay-2">
-          <div class="p-8">
-            <div class="flex flex-wrap gap-3 mb-6">
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Production system</span>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Autonomous CVE auditor</span>
-            </div>
-            <h3 class="font-headline text-2xl font-bold text-primary mb-3">Dependency Drift Sentinel</h3>
-            <p class="text-muted text-base mb-8 max-w-3xl">Catches vulnerable dependencies before they merge — and re-checks its own fix until the vulnerability is actually gone.</p>
-            <!-- Architecture Strip -->
-            <div class="arch-strip mb-8 w-full bg-background border border-white/[0.06] rounded p-4 overflow-x-auto">
-              <svg fill="none" viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" class="w-full min-w-[700px] h-[120px]">
-                <defs><marker id="ah2" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon fill="#2DD4A8" points="0 0, 10 3.5, 0 7"></polygon></marker></defs>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="100" x="10" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="60" y="65">PR trigger</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="100" x="130" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="180" y="65">Fetch lockfiles</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="100" x="250" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="300" y="65">Resolve tree</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="120" x="370" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="430" y="65">OSV + semantic CVE</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="100" x="510" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="560" y="65">Migration plan</text>
-                <!-- Recursive node -->
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="2" width="100" x="630" y="40"></rect>
-                <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" text-anchor="middle" x="680" y="65">Re-check loop</text>
-                <path d="M730,60 C750,60 750,20 680,20 C640,20 630,40 630,40" stroke="#2DD4A8" stroke-width="1" fill="none" stroke-dasharray="3,3" marker-end="url(#ah2)"></path>
-                <line marker-end="url(#ah2)" stroke="#2DD4A8" stroke-width="1" x1="110" x2="125" y1="60" y2="60"></line>
-                <line marker-end="url(#ah2)" stroke="#2DD4A8" stroke-width="1" x1="230" x2="245" y1="60" y2="60"></line>
-                <line marker-end="url(#ah2)" stroke="#2DD4A8" stroke-width="1" x1="350" x2="365" y1="60" y2="60"></line>
-                <line marker-end="url(#ah2)" stroke="#2DD4A8" stroke-width="1" x1="490" x2="505" y1="60" y2="60"></line>
-                <line marker-end="url(#ah2)" stroke="#2DD4A8" stroke-width="1" x1="610" x2="625" y1="60" y2="60"></line>
-              </svg>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div class="bg-background border-l-2 border-accent p-5 rounded-r">
-                <p class="font-mono text-sm text-muted leading-relaxed">
-                  <span class="text-accent">&gt;</span> OSV.dev alone misses aliased package names. Layering semantic search over the CVE corpus on top of the deterministic OSV check is what caught the cases OSV.dev alone didn't.
-                </p>
-              </div>
-              <div>
-                <ul class="space-y-3 font-mono text-sm text-muted">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>cyclic LangGraph loop that re-runs until critical CVEs resolved</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>recursive eval re-validates the agent's own migration suggestions</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>packaged as Docker container deployable as GitHub Actions runner</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 border-t border-white/[0.06] pt-6">
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastMCP</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">OSV.dev</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">GitHub Actions</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Card 3: Shadow-Mode AI Deployment Proxy -->
-        <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden group hover:-translate-y-0.5 transition-transform duration-300 fade-in fade-delay-3">
-          <div class="p-8">
-            <div class="flex flex-wrap gap-3 mb-6">
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Production system</span>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Zero-risk AI rollout infrastructure</span>
-            </div>
-            <h3 class="font-headline text-2xl font-bold text-primary mb-3">Shadow-Mode AI Deployment Proxy</h3>
-            <p class="text-muted text-base mb-8 max-w-3xl">Lets a team test a new AI agent against 100% of real production traffic with zero risk to users.</p>
-            <!-- Architecture Strip -->
-            <div class="arch-strip mb-8 w-full bg-background border border-white/[0.06] rounded p-4 overflow-x-auto">
-              <svg fill="none" viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" class="w-full min-w-[700px] h-[120px]">
-                <defs><marker id="ah3" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon fill="#2DD4A8" points="0 0, 10 3.5, 0 7"></polygon></marker></defs>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="110" x="10" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="65" y="65">Intercept request</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="120" x="140" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="200" y="57">Fan out (legacy +</text>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="200" y="70">shadow agent)</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="140" x="280" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="350" y="57">3-layer comparison</text>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="350" y="70">(schema+embed+judge)</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="1" width="120" x="440" y="40"></rect>
-                <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" x="500" y="65">Nightly clustering</text>
-                <rect fill="#141820" height="40" rx="4" stroke="#2DD4A8" stroke-width="2" width="120" x="580" y="40"></rect>
-                <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" text-anchor="middle" x="640" y="65">CI gate ≥95%</text>
-                <line marker-end="url(#ah3)" stroke="#2DD4A8" stroke-width="1" x1="120" x2="135" y1="60" y2="60"></line>
-                <line marker-end="url(#ah3)" stroke="#2DD4A8" stroke-width="1" x1="260" x2="275" y1="60" y2="60"></line>
-                <line marker-end="url(#ah3)" stroke="#2DD4A8" stroke-width="1" x1="420" x2="435" y1="60" y2="60"></line>
-                <line marker-end="url(#ah3)" stroke="#2DD4A8" stroke-width="1" x1="560" x2="575" y1="60" y2="60"></line>
-              </svg>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div class="bg-background border-l-2 border-accent p-5 rounded-r">
-                <p class="font-mono text-sm text-muted leading-relaxed">
-                  <span class="text-accent">&gt;</span> Cutting shadow-agent cost from $0.043 to $0.011 per request via semantic caching wasn't optimization for its own sake — it's what makes shadow-mode testing affordable enough to actually run continuously, not just before a launch.
-                </p>
-              </div>
-              <div>
-                <ul class="space-y-3 font-mono text-sm text-muted">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>zero added latency to real users</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>three-layer divergence detection, not just exact-match diffing</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>nightly k-means clustering surfaces systematic failure patterns</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>full stack containerized for reproducible deploy</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 border-t border-white/[0.06] pt-6">
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">asyncio</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Redis</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LLM-as-judge</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
-            </div>
-          </div>
-        </article>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ========== CLIENT SYSTEMS ========== -->
-  <section class="py-24 px-6 md:px-12 bg-[#0B0D10] border-y border-white/5" id="client-systems">
+  <section class="py-24 px-6 md:px-12 bg-[#0B0D10]/60 border-y border-white/5" id="client-systems">
     <div class="max-w-7xl mx-auto">
-      <div class="mb-16 fade-in">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-8 h-px bg-accent"></div>
-          <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">CLIENT SYSTEMS</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <!-- LEFT COLUMN: Sticky Header -->
+        <div class="lg:col-span-3 lg:sticky lg:top-32 fade-in z-10">
+          <div class="mb-16 lg:mb-0">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-px bg-accent"></div>
+              <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">CLIENT SYSTEMS</span>
+            </div>
+            <h2 class="font-headline text-4xl md:text-[40px] font-extrabold text-primary mb-4 tracking-tight leading-tight">Shipped for real clients. Running in production.</h2>
+            <span class="swipe-hint">swipe to explore →</span>
+          </div>
         </div>
-        <h2 class="font-headline text-4xl md:text-[40px] font-extrabold text-primary mb-4 tracking-tight leading-tight">Shipped for real clients. Running in production.</h2>
-        <span class="swipe-hint">swipe to explore →</span>
+
+        <!-- RIGHT COLUMN: Scrolling Cards -->
+        <div class="lg:col-span-9 w-full z-10">
+          <!-- UNIFIED: Mobile Carousel + Desktop Stack -->
+          <div class="client-unified-container relative w-full">
+            <div class="card-carousel md:flex-col md:overflow-visible md:space-y-12 md:p-0 md:gap-0" id="client-carousel">
+              
+              <!-- Client Card 1: AI Decision Layer -->
+              <article class="tilt-card bg-surface card-border rounded-xl overflow-hidden md:w-full md:max-w-none fade-in fade-delay-1">
+                <div class="p-6 md:p-8">
+                  <div class="flex flex-wrap gap-3 mb-4">
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Workflow automation</span>
+                  </div>
+                  <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-4">
+                    <h3 class="font-headline text-2xl font-bold text-primary">AI Decision Layer with Slack Integration</h3>
+                    <div class="flex flex-wrap gap-2">
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Slack API</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Left: SVG Architecture -->
+                    <div class="lg:w-1/3 flex-shrink-0 bg-background border border-white/[0.06] rounded flex items-center justify-center p-6 relative overflow-hidden group">
+                      <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <svg class="w-full h-full min-h-[120px]" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <pattern id="gridc1" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+                          </pattern>
+                          <marker id="arrc1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#2DD4A8" opacity="0.6"/>
+                          </marker>
+                          <marker id="arrc1_alert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f43f5e" opacity="0.6"/>
+                          </marker>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#gridc1)" />
+                        
+                        <rect x="10" y="65" width="50" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="35" y="83">Request</text>
+                        
+                        <line x1="60" y1="80" x2="85" y2="80" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc1)" />
+                        
+                        <polygon points="110,55 135,80 110,105 85,80" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="7" font-weight="bold" text-anchor="middle" x="110" y="82">Conf &gt;95%?</text>
+                        
+                        <!-- High Confidence -> Auto Execute -->
+                        <path d="M 110 55 L 110 30 L 195 30" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc1)" />
+                        <rect x="200" y="15" width="80" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" text-anchor="middle" x="240" y="33">Auto-Approve</text>
+                        
+                        <!-- Low Confidence -> Slack -->
+                        <path d="M 110 105 L 110 130 L 195 130" fill="none" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2,2" opacity="0.6" marker-end="url(#arrc1_alert)" />
+                        <rect x="200" y="115" width="80" height="30" rx="4" fill="#141820" stroke="#f43f5e" stroke-width="1" />
+                        <text fill="#f43f5e" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="240" y="133">Slack Alert</text>
+                      </svg>
+                    </div>
+
+                    <!-- Right: 4 Quadrants -->
+                    <div class="flex flex-col gap-6 flex-1">
+                      <div>
+                        <span class="quadrant-label">THE SITUATION</span>
+                        <p class="quadrant-body">The client's team was manually reviewing every incoming decision — even the obvious ones. No triage, no prioritisation. High-confidence cases and edge cases landed in the same queue and got the same human time.</p>
+                      </div>
+                      <div>
+                        <span class="quadrant-label">WHAT I BUILT</span>
+                        <p class="quadrant-body">A LangGraph routing layer that classifies each decision by confidence, auto-approves above the threshold, and sends only the uncertain cases to a human via Slack. Full audit trail on every decision, approved or automated.</p>
+                      </div>
+                      <div>
+                        <span class="quadrant-label">WHAT THEY GOT</span>
+                        <p class="quadrant-body">Manual review volume cut significantly — humans now only see edge cases, not rubber stamps. Response time on escalations dropped because the Slack alert arrives with full context already attached, not a raw request.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Client Card 2: AI Document Chatbot -->
+              <article class="tilt-card bg-surface card-border rounded-xl overflow-hidden md:w-full md:max-w-none fade-in fade-delay-2">
+                <div class="p-6 md:p-8">
+                  <div class="flex flex-wrap gap-3 mb-4">
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Document intelligence</span>
+                  </div>
+                  <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-4">
+                    <h3 class="font-headline text-2xl font-bold text-primary">Document QA with Citations &amp; Analytics</h3>
+                    <div class="flex flex-wrap gap-2">
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Left: SVG Architecture -->
+                    <div class="lg:w-1/3 flex-shrink-0 bg-background border border-white/[0.06] rounded flex items-center justify-center p-6 relative overflow-hidden group">
+                      <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <svg class="w-full h-full min-h-[120px]" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <pattern id="gridc2" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+                          </pattern>
+                          <marker id="arrc2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#2DD4A8" opacity="0.6"/>
+                          </marker>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#gridc2)" />
+                        
+                        <rect x="10" y="30" width="50" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" opacity="0.6" />
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="35" y="48">PDFs/Docs</text>
+                        
+                        <path d="M 60 45 L 95 45" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc2)" />
+                        
+                        <rect x="100" y="30" width="60" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" text-anchor="middle" x="130" y="48">pgvector</text>
+                        
+                        <rect x="10" y="100" width="50" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="35" y="118">Query</text>
+                        
+                        <path d="M 60 115 L 130 115 L 130 65" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc2)" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="6" x="70" y="110">Hybrid Search</text>
+                        
+                        <path d="M 160 45 L 210 45 L 210 65" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc2)" />
+                        
+                        <rect x="180" y="70" width="90" height="50" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" text-anchor="middle" x="225" y="90">Generator</text>
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="7" opacity="0.6" text-anchor="middle" x="225" y="105">+ Citations</text>
+                      </svg>
+                    </div>
+
+                    <!-- Right: 4 Quadrants -->
+                    <div class="flex flex-col gap-6 flex-1">
+                      <div>
+                        <span class="quadrant-label">THE SITUATION</span>
+                        <p class="quadrant-body">The client's team was wasting hours searching through dense PDFs and word documents for specific clauses. When they tested off-the-shelf AI tools, they hallucinated answers and couldn't point to the exact source paragraph, making them untrustworthy.</p>
+                      </div>
+                      <div>
+                        <span class="quadrant-label">WHAT I BUILT</span>
+                        <p class="quadrant-body">A hybrid-search RAG pipeline using pgvector that strictly grounds answers in the source material. It generates precise, paragraph-level citations for every claim and automatically logs queries that the knowledge base couldn't answer.</p>
+                      </div>
+                      <div>
+                        <span class="quadrant-label">WHAT THEY GOT</span>
+                        <p class="quadrant-body">Immediate, verifiable answers to complex queries without reading full documents. The automated "Content Gap" report surfaced critical blind spots in their documentation that they didn't even know existed.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Client Card 3: AI Lead Classifier -->
+              <article class="tilt-card bg-surface card-border rounded-xl overflow-hidden md:w-full md:max-w-none fade-in fade-delay-3">
+                <div class="p-6 md:p-8">
+                  <div class="flex flex-wrap gap-3 mb-4">
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
+                    <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Sales automation</span>
+                  </div>
+                  <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-4">
+                    <h3 class="font-headline text-2xl font-bold text-primary">Lead Classifier &amp; CRM Automation</h3>
+                    <div class="flex flex-wrap gap-2">
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
+                      <span class="font-mono text-xs px-2 py-1 rounded tech-tag">CRM API</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Left: SVG Architecture -->
+                    <div class="lg:w-1/3 flex-shrink-0 bg-background border border-white/[0.06] rounded flex items-center justify-center p-6 relative overflow-hidden group">
+                      <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <svg class="w-full h-full min-h-[120px]" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <pattern id="gridc3" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+                          </pattern>
+                          <marker id="arrc3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#2DD4A8" opacity="0.6"/>
+                          </marker>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#gridc3)" />
+                        
+                        <circle cx="35" cy="80" r="20" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" x="35" y="83">Leads</text>
+                        
+                        <line x1="55" y1="80" x2="85" y2="80" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc3)" />
+                        
+                        <rect x="90" y="55" width="60" height="50" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1.5" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" text-anchor="middle" x="120" y="75">Scoring</text>
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="6" opacity="0.6" text-anchor="middle" x="120" y="90">Model</text>
+                        
+                        <path d="M 150 70 L 195 40" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.6" marker-end="url(#arrc3)" />
+                        <path d="M 150 90 L 195 120" fill="none" stroke="#2DD4A8" stroke-width="1" opacity="0.4" stroke-dasharray="2,2" marker-end="url(#arrc3)" />
+                        
+                        <rect x="200" y="25" width="80" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" />
+                        <text fill="#2DD4A8" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" text-anchor="middle" x="240" y="43">CRM + Alert</text>
+                        
+                        <rect x="200" y="105" width="80" height="30" rx="4" fill="#141820" stroke="#2DD4A8" stroke-width="1" opacity="0.4" />
+                        <text fill="#EDEDED" font-family="JetBrains Mono, monospace" font-size="8" opacity="0.6" text-anchor="middle" x="240" y="123">Drop / Nurture</text>
+                      </svg>
+                    </div>
+
+                    <!-- Right: 4 Quadrants -->
+                    <div class="flex flex-col gap-6 flex-1">
+                      <div>
+                        <span class="quadrant-label">THE SITUATION</span>
+                        <p class="quadrant-body">Sales reps were drowning in inbound leads, spending hours manually qualifying them. High-value prospects were sitting in the same inbox as spam, causing slow response times and lost revenue opportunities.</p>
+                      </div>
+                      <div>
+                        <span class="quadrant-label">WHAT I BUILT</span>
+                        <p class="quadrant-body">A multi-factor scoring engine that evaluates firmographic signals and intent. High-value leads are instantly enriched and pushed to the CRM. Edge cases trigger smart escalation rules for human review, reducing false negatives to near-zero.</p>
+                      </div>
+                      <div>
+                        <span class="quadrant-label">WHAT THEY GOT</span>
+                        <p class="quadrant-body">Sales team now only talks to pre-qualified, highly-enriched leads. Manual triage time dropped to near-zero, and high-value prospects receive immediate outreach, directly increasing close rates.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+            
+            <!-- Mobile Dots -->
+            <div class="carousel-dots md:hidden" id="client-dots">
+              <div class="carousel-dot active" onclick="scrollToCard('client-carousel','client-dots',0)"></div>
+              <div class="carousel-dot" onclick="scrollToCard('client-carousel','client-dots',1)"></div>
+              <div class="carousel-dot" onclick="scrollToCard('client-carousel','client-dots',2)"></div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- MOBILE: Client Systems carousel -->
-      <div class="card-carousel-wrapper">
-        <div class="card-carousel" id="client-carousel">
-          <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden">
-            <div class="p-8">
-              <div class="flex flex-wrap gap-3 mb-4">
-                <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
-                <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Workflow automation</span>
-              </div>
-              <h3 class="font-headline text-xl font-bold text-primary mb-3">AI Decision Layer with Human Approval &amp; Slack</h3>
-              <p class="text-muted text-sm mb-4">An AI triage layer that classifies incoming decisions, routes them automatically, and pings a human on Slack only when it isn't sure.</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Slack API</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-              </div>
-              <div class="bg-background border-l-2 border-accent p-3 rounded-r mb-3">
-                <p class="font-mono text-xs text-muted leading-relaxed"><span class="text-accent">&gt;</span> Reduced manual review volume. Human time spent only on edge cases.</p>
-              </div>
-              <ul class="space-y-2 font-mono text-sm text-muted mb-3">
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>confidence-gated routing: agent acts autonomously above threshold, escalates below it</span></li>
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>Slack integration for async human-in-the-loop approval</span></li>
-              </ul>
-              <button class="expand-btn" onclick="toggleExpand(this)">+ 2 more details</button>
-              <div class="expanded-content" hidden>
-                <ul class="space-y-2 font-mono text-sm text-muted mt-2">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>approval dashboard with full decision history and audit trail</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>structured output validation regardless of LLM response variance</span></li>
-                </ul>
-              </div>
-            </div>
-          </article>
-          <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden">
-            <div class="p-8">
-              <div class="flex flex-wrap gap-3 mb-4">
-                <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
-                <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Document intelligence</span>
-              </div>
-              <h3 class="font-headline text-xl font-bold text-primary mb-3">AI Document Chatbot with Citations &amp; Gap Analytics</h3>
-              <p class="text-muted text-sm mb-4">A document Q&amp;A system that cites exactly where each answer came from — and tells you what your knowledge base can't answer yet.</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">hybrid search</span>
-              </div>
-              <div class="bg-background border-l-2 border-accent p-3 rounded-r mb-3">
-                <p class="font-mono text-xs text-muted leading-relaxed"><span class="text-accent">&gt;</span> Paragraph-level citations. Content gap report surfaced blind spots the client didn't know existed.</p>
-              </div>
-              <ul class="space-y-2 font-mono text-sm text-muted mb-3">
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>paragraph-level citations traceable to specific source sections</span></li>
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>unanswered queries logged and surfaced as content gap report</span></li>
-              </ul>
-              <button class="expand-btn" onclick="toggleExpand(this)">+ 2 more details</button>
-              <div class="expanded-content" hidden>
-                <ul class="space-y-2 font-mono text-sm text-muted mt-2">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>hybrid retrieval reduces missed answers from vocabulary mismatch</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>ingestion handles PDF, DOCX, and plain text</span></li>
-                </ul>
-              </div>
-            </div>
-          </article>
-          <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden">
-            <div class="p-8">
-              <div class="flex flex-wrap gap-3 mb-4">
-                <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
-                <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Sales automation</span>
-              </div>
-              <h3 class="font-headline text-xl font-bold text-primary mb-3">AI Lead Classifier &amp; CRM Automation</h3>
-              <p class="text-muted text-sm mb-4">Scores and routes inbound leads automatically — high-value ones go straight to CRM with enriched context, the rest are filtered.</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-                <span class="font-mono text-xs px-2 py-1 rounded tech-tag">CRM API</span>
-              </div>
-              <div class="bg-background border-l-2 border-accent p-3 rounded-r mb-3">
-                <p class="font-mono text-xs text-muted leading-relaxed"><span class="text-accent">&gt;</span> Sales team receives pre-qualified leads. No high-value lead misclassified without a human check.</p>
-              </div>
-              <ul class="space-y-2 font-mono text-sm text-muted mb-3">
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>multi-factor scoring: firmographic signals, intent, source quality combined</span></li>
-                <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>CRM push includes enriched context — not just raw form data</span></li>
-              </ul>
-              <button class="expand-btn" onclick="toggleExpand(this)">+ 2 more details</button>
-              <div class="expanded-content" hidden>
-                <ul class="space-y-2 font-mono text-sm text-muted mt-2">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>smart escalation: boundary leads flagged for human review</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>audit log for every classification decision</span></li>
-                </ul>
-              </div>
-            </div>
-          </article>
-        </div>
-        <div class="carousel-dots" id="client-dots">
-          <div class="carousel-dot active" onclick="scrollToCard('client-carousel','client-dots',0)"></div>
-          <div class="carousel-dot" onclick="scrollToCard('client-carousel','client-dots',1)"></div>
-          <div class="carousel-dot" onclick="scrollToCard('client-carousel','client-dots',2)"></div>
-        </div>
-      </div>
-
-      <!-- DESKTOP: stacked cards -->
-      <div class="desktop-card-list space-y-12">
-
-        <!-- Client Card 1: AI Decision Layer -->
-        <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden group hover:-translate-y-0.5 transition-transform duration-300 fade-in fade-delay-1">
-          <div class="p-8">
-            <div class="flex flex-wrap gap-3 mb-6">
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Workflow automation</span>
-            </div>
-            <h3 class="font-headline text-2xl font-bold text-primary mb-3">AI Decision Layer with Human Approval Dashboard &amp; Slack</h3>
-            <p class="text-muted text-base mb-8 max-w-3xl">An AI triage layer that classifies incoming decisions, routes them automatically, and pings a human on Slack only when it isn't sure.</p>
-            <!-- Architecture Strip -->
-            <div class="mb-8 w-full bg-background border border-white/[0.06] rounded p-4 overflow-x-auto">
-              <p class="font-mono text-xs text-muted leading-relaxed">
-                <span class="text-accent">Incoming request</span> → AI classifier → confidence threshold check → <span class="text-primary">auto-approve (high confidence)</span> / <span class="text-accent">Slack escalation (low confidence)</span> → human approves via dashboard → action executed
-              </p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div class="bg-background border-l-2 border-accent p-5 rounded-r">
-                <p class="font-mono text-sm text-muted leading-relaxed">
-                  <span class="text-accent">&gt;</span> Reduced manual review volume by routing high-confidence decisions automatically. Human time spent only on edge cases.
-                </p>
-              </div>
-              <div>
-                <ul class="space-y-3 font-mono text-sm text-muted">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>confidence-gated routing: agent acts autonomously above threshold, escalates below it</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>Slack integration for async human-in-the-loop approval without requiring a separate tool</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>approval dashboard with full decision history and audit trail</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>structured output validation so downstream systems receive clean, typed data regardless of LLM response variance</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 border-t border-white/[0.06] pt-6">
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Slack API</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Client Card 2: AI Document Chatbot -->
-        <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden group hover:-translate-y-0.5 transition-transform duration-300 fade-in fade-delay-2">
-          <div class="p-8">
-            <div class="flex flex-wrap gap-3 mb-6">
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Document intelligence</span>
-            </div>
-            <h3 class="font-headline text-2xl font-bold text-primary mb-3">AI Document Chatbot with Citations &amp; Content Gap Analytics</h3>
-            <p class="text-muted text-base mb-8 max-w-3xl">A document Q&amp;A system that cites exactly where each answer came from — and tells you what questions your knowledge base can't answer yet.</p>
-            <!-- Architecture Strip -->
-            <div class="mb-8 w-full bg-background border border-white/[0.06] rounded p-4 overflow-x-auto">
-              <p class="font-mono text-xs text-muted leading-relaxed">
-                <span class="text-accent">Document ingestion</span> → chunking + embedding → pgvector store → user query → hybrid retrieval → answer generation with inline citations → <span class="text-primary">gap detection (unanswered queries logged)</span> → periodic content gap report
-              </p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div class="bg-background border-l-2 border-accent p-5 rounded-r">
-                <p class="font-mono text-sm text-muted leading-relaxed">
-                  <span class="text-accent">&gt;</span> Answers grounded in source documents with paragraph-level citations. Content gap report surfaced knowledge base blind spots the client didn't know existed.
-                </p>
-              </div>
-              <div>
-                <ul class="space-y-3 font-mono text-sm text-muted">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>paragraph-level citations in every response — answer is traceable to specific source sections, not just document titles</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>unanswered or low-confidence queries logged automatically and surfaced as a content gap report</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>hybrid retrieval (semantic + keyword) reduces missed answers from vocabulary mismatch</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>ingestion pipeline handles PDF, DOCX, and plain text without per-format custom logic</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 border-t border-white/[0.06] pt-6">
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">pgvector</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">hybrid search</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Client Card 3: AI Lead Classifier -->
-        <article class="bg-surface border border-white/[0.06] rounded-lg overflow-hidden group hover:-translate-y-0.5 transition-transform duration-300 fade-in fade-delay-3">
-          <div class="p-8">
-            <div class="flex flex-wrap gap-3 mb-6">
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm border border-accent text-accent uppercase tracking-wider">Client delivery</span>
-              <span class="font-mono text-xs px-2.5 py-1 rounded-sm bg-white/5 text-muted border border-transparent uppercase tracking-wider">Sales automation</span>
-            </div>
-            <h3 class="font-headline text-2xl font-bold text-primary mb-3">AI Lead Classifier &amp; CRM Automation with Smart Escalation</h3>
-            <p class="text-muted text-base mb-8 max-w-3xl">Scores and routes inbound leads automatically — high-value ones go straight to CRM with enriched context, the rest are filtered before they waste anyone's time.</p>
-            <!-- Architecture Strip -->
-            <div class="mb-8 w-full bg-background border border-white/[0.06] rounded p-4 overflow-x-auto">
-              <p class="font-mono text-xs text-muted leading-relaxed">
-                <span class="text-accent">Inbound lead data</span> → AI scoring model → tier classification → <span class="text-primary">high-tier: enrich + push to CRM + notify sales</span> → low-tier: auto-filter or nurture sequence → <span class="text-accent">escalation rules for edge cases</span>
-              </p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div class="bg-background border-l-2 border-accent p-5 rounded-r">
-                <p class="font-mono text-sm text-muted leading-relaxed">
-                  <span class="text-accent">&gt;</span> Sales team receives pre-qualified, enriched leads. Manual lead review time cut significantly. Escalation rules ensure no high-value lead is misclassified without a human check.
-                </p>
-              </div>
-              <div>
-                <ul class="space-y-3 font-mono text-sm text-muted">
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>multi-factor scoring: firmographic signals, intent indicators, and source quality combined, not just a single field match</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>CRM push includes enriched context (company size, inferred intent, lead source) — not just raw form data</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>smart escalation: leads near the classification boundary are flagged for human review rather than silently dropped or promoted</span></li>
-                  <li class="flex items-start gap-2"><span class="text-accent mt-0.5">-&gt;</span><span>audit log for every classification decision so the sales team can retrain the scoring rules from real feedback</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-2 border-t border-white/[0.06] pt-6">
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">LangGraph</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">FastAPI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">PydanticAI</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">CRM API</span>
-              <span class="font-mono text-xs px-2 py-1 rounded tech-tag">Docker</span>
-            </div>
-          </div>
-        </article>
-
+</div>
       </div>
     </div>
   </section>
@@ -1318,7 +1464,7 @@
   </section>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="w-full py-8 border-t border-white/5 bg-[#0B0D10]">
+  <footer class="w-full py-8 border-t border-white/5 ">
     <div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4">
       <p class="font-mono text-[10px] text-muted uppercase tracking-widest">© 2026 Raj Jaiswal. Open to engineering roles and project work.</p>
       <div class="flex space-x-6">
@@ -1452,6 +1598,75 @@
           btn.textContent = '+ ' + extras.length + ' more';
         }
       }
+      // --- 3D Tilt Card Physics & Glare ---
+      const tiltCards = document.querySelectorAll('.tilt-card');
+      tiltCards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+          if (window.innerWidth <= 768) return; // Disable 3D tilt on mobile
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const xPct = (x / rect.width) * 100;
+          const yPct = (y / rect.height) * 100;
+          
+          card.style.setProperty('--mouse-x', `${xPct}%`);
+          card.style.setProperty('--mouse-y', `${yPct}%`);
+          
+          const rotateY = ((xPct - 50) / 50) * 4; 
+          const rotateX = ((50 - yPct) / 50) * 4;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+          // Reset glare slightly off-center
+          card.style.setProperty('--mouse-x', `50%`);
+          card.style.setProperty('--mouse-y', `50%`);
+        });
+      });
+    });
+  </script>
+
+  <!-- tsParticles Background -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <script>
+    tsParticles.load("tsparticles", {
+      background: { color: { value: "transparent" } },
+      fpsLimit: 60,
+      interactivity: {
+        events: {
+          onHover: { enable: true, mode: "grab" },
+          resize: true,
+        },
+        modes: {
+          grab: { distance: 180, links: { opacity: 0.4, color: "#2DD4A8" } }
+        }
+      },
+      particles: {
+        color: { value: "#2DD4A8" },
+        links: {
+          color: "#2DD4A8",
+          distance: 120,
+          enable: true,
+          opacity: 0.15,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 0.6,
+          direction: "none",
+          random: true,
+          straight: false,
+          outModes: { default: "out" }
+        },
+        number: { density: { enable: true, area: 800 }, value: 70 },
+        opacity: { value: 0.3 },
+        shape: { type: "circle" },
+        size: { value: { min: 1, max: 2 } }
+      },
+      detectRetina: true
     });
   </script>
 </body>
